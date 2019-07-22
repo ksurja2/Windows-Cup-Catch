@@ -6,6 +6,8 @@ using UnityEngine;
 //I think that's what Im trying to do???
 public class Main : MonoBehaviour
 {
+
+    //this does nothing!!!!
     
     // Start is called before the first frame update
     void Start()
