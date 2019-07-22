@@ -6,16 +6,38 @@ using UnityEngine;
 public class CatchBall : MonoBehaviour
 {
     public GameObject player;
+	public GameObject ball;
+	//private bool isInBucket;
  
     //upon being caught, convert ball into child of player
+	//https://answers.unity.com/questions/632792/how-to-make-an-object-a-child-of-another-object-sc.html 
     void OnTriggerEnter(Collider other)
     {
-        other.transform.parent = player.transform;
+		other.transform.SetParent(player.transform.parent);
+		  
+		Debug.Log ("Enter");
+		//isInBucket = true;
+
+		//***ugly fix, please find something better***
+		//other.attachedRigidbody.useGravity = false;
+		//other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+		//***this super does not work***
+		//Rigidbody m_Rigidbody = other.GetComponent<Rigidbody>();
+		//This locks the RigidBody so that it does not move or rotate in the Z axis.
+		//m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationY;
     }
 
     //upon falling out of the player bucket, the ball is no longer a child
     void OnTriggerExit(Collider other)
     {
         other.transform.parent = null;
+		//other.attachedRigidbody.useGravity = true;
+		Debug.Log ("Exit");
+		//isInBucket = false;
     }
+
+	void Update(){
+
+	}
 }

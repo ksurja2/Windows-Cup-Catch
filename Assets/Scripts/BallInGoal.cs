@@ -8,7 +8,6 @@ using UnityEngine.UI; //for Text object
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
-    
 
     //initialize counter for captured targets
     private int numCaptured;
@@ -16,6 +15,7 @@ public class BallInGoal : MonoBehaviour
 
     private void Start()
     {
+		
         DisplayText();
         numCaptured = 0;
     }
@@ -55,7 +55,8 @@ public class BallInGoal : MonoBehaviour
         score.text = "Score: " + numCaptured.ToString();
     }
 
-
+	//FIX ME
+	//create random walk of radius x around previous goal position (within workspace)
     void MoveGoal()
     {
         Vector3 posOne = new Vector3(-40, -7.5f, -7);
