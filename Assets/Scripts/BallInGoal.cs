@@ -8,6 +8,8 @@ using UnityEngine.UI; //for Text object
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
+	public float radiusOfWalk = 5.0f;
+	public float workspaceBound = 3.0f;
 
     //initialize counter for captured targets
     private int numCaptured;
@@ -21,13 +23,13 @@ public class BallInGoal : MonoBehaviour
     }
 
     //Test Goal Movement
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        MoveGoal();
-    //    }
-    //}
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            MoveGoal();
+        }
+    }
 
     //if target enters Goal, destroy object and increment counter 
     //BallFSM, CASE #5
@@ -59,7 +61,38 @@ public class BallInGoal : MonoBehaviour
 	//create random walk of radius x around previous goal position (within workspace)
     void MoveGoal()
     {
-        Vector3 posOne = new Vector3(-40, -7.5f, -7);
+
+		Vector2 newPosCoordinates = Random.insideUnitCircle * radiusOfWalk;
+		float newXPos = newPosCoordinates [0];
+		float newZPos = newPosCoordinates [1];
+
+		Vector3 thisPos = transform.position; //get current position of goal
+		Vector3 newPos = new Vector3 (newXPos, 0.0f, newZPos) + thisPos; //move to a point around current position
+		transform.position = newPos;
+
+		OutOfBounds();
+    }
+
+	void OutOfBounds(){
+		
+		float xPos = transform.position.x;
+		float zPos = transform.position.z;
+		float minX = SpawnBall.lowerSpawnX + workspaceBound; 
+		float maxX = SpawnBall.upperSpawnX + workspaceBound;
+		float minZ = SpawnBall.lowerSpawnZ + workspaceBound;
+		float maxZ = SpawnBall.upperSpawnZ + workspaceBound;
+
+		if (xPos > maxX || xPos < minX) {
+			MoveGoal ();
+		}
+
+		if (zPos > maxZ || zPos < minZ) {
+			MoveGoal ();
+		}
+
+	}
+
+	/*Vector3 posOne = new Vector3(-40, -7.5f, -7);
         Vector3 posTwo = new Vector3(40, -7.5f, -7);
         Vector3 posThree = new Vector3(-40, -7.5f, 14);
         Vector3 posFour = new Vector3(40, -7.5f, 14);
@@ -90,9 +123,6 @@ public class BallInGoal : MonoBehaviour
         else
         {
             transform.position = posFive;
-        }
-
-    }
-
+        } */
 
 }
