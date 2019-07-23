@@ -23,13 +23,13 @@ public class BallInGoal : MonoBehaviour
     }
 
     //Test Goal Movement
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             MoveGoal();
         }
-    }
+    }*/
 
     //if target enters Goal, destroy object and increment counter 
     //BallFSM, CASE #5

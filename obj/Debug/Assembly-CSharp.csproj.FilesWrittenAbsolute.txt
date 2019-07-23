@@ -20,3 +20,13 @@
 /home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/Unity.CecilTools.dll
 /home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/mysql.data.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/BurtSharp.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/BurtSharp.UnityInterface.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/coapsharp.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/CsvHelper.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/MathNet.Numerics.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/MsgPack.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/Newtonsoft.Json.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/RSG.Promise.dll
+/home/robot/unity-projects/Windows-Cup-Catch/Temp/bin/Debug/System.Threading.dll
