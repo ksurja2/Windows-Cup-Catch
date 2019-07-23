@@ -77,6 +77,7 @@
 -define:ENABLE_VR
 -define:ENABLE_WEBSOCKET_HOST
 -define:ENABLE_MONO
+-define:NET_2_0
 -define:ENABLE_PROFILER
 -define:DEBUG
 -define:TRACE
@@ -92,9 +93,9 @@ Assets/Scripts/FiniteStateMachine.cs
 Assets/Scripts/MissedBall.cs
 Assets/Scripts/PlayerMovement.cs
 Assets/Scripts/SpawnBall.cs
--r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Runtime.Serialization.dll
--r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Xml.Linq.dll
--r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/UnityScript.dll
--r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/UnityScript.Lang.dll
--r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/Boo.Lang.dll
+-r:/opt/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Runtime.Serialization.dll
+-r:/opt/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Xml.Linq.dll
+-r:/opt/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/UnityScript.dll
+-r:/opt/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/UnityScript.Lang.dll
+-r:/opt/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/Boo.Lang.dll
 -sdk:2.0

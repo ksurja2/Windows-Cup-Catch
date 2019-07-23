@@ -2,7 +2,7 @@
 -target:library
 -nowarn:0169
 -langversion:4
--out:Temp/Assembly-CSharp.dll
+-out:Temp/Assembly-CSharp-firstpass.dll
 -unsafe
 -r:/opt/Unity/Editor/Data/Managed/UnityEngine.dll
 -r:/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
@@ -86,12 +86,7 @@
 -define:UNITY_EDITOR_LINUX
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
-Assets/Scripts/BallInGoal.cs
-Assets/Scripts/CatchBall.cs
-Assets/Scripts/FiniteStateMachine.cs
-Assets/Scripts/MissedBall.cs
-Assets/Scripts/PlayerMovement.cs
-Assets/Scripts/SpawnBall.cs
+"Assets/Standard Assets/PlayerMovement.cs"
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Runtime.Serialization.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Xml.Linq.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/UnityScript.dll

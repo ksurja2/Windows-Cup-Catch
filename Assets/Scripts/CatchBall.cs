@@ -13,9 +13,12 @@ public class CatchBall : MonoBehaviour
 	//https://answers.unity.com/questions/632792/how-to-make-an-object-a-child-of-another-object-sc.html 
     void OnTriggerEnter(Collider other)
     {
-		other.transform.SetParent(player.transform.parent);
-		  
-		Debug.Log ("Enter");
+		if (other.CompareTag ("Ball")) {
+			other.transform.parent = player.transform;
+		
+			
+			Debug.Log ("Enter");
+		}
 		//isInBucket = true;
 
 		//***ugly fix, please find something better***
@@ -31,9 +34,11 @@ public class CatchBall : MonoBehaviour
     //upon falling out of the player bucket, the ball is no longer a child
     void OnTriggerExit(Collider other)
     {
-        other.transform.parent = null;
-		//other.attachedRigidbody.useGravity = true;
-		Debug.Log ("Exit");
+		if (other.CompareTag ("Ball")) {
+			other.transform.parent = null;
+			//other.attachedRigidbody.useGravity = true;
+			Debug.Log ("Exit");
+		}
 		//isInBucket = false;
     }
 
