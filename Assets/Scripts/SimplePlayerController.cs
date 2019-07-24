@@ -33,7 +33,7 @@ public class SimplePlayerController : MonoBehaviour {
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
-	private float flipangle, CalibAngle1=0, CalibTenoAngle;
+	private float flipangle, CalibAngle1=90, CalibTenoAngle;
 	private float MasterForce;
 
 	private void Awake () {
@@ -62,12 +62,12 @@ public class SimplePlayerController : MonoBehaviour {
 	void Update () {
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
 			transform.localScale = new Vector3(-objectScale, objectScale, objectScale);
-			flipangle = 180f;
+			flipangle = -90f;
 
 		}
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
 			transform.localScale = new Vector3(objectScale, objectScale, objectScale);
-			flipangle = 0f;
+			flipangle = 90f;
 		}
 	}
 

@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 1262108688}
   m_Layer: 0
   m_Name: Goal!
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseMovementScale: 0.2
   mouseScrollWheelScale: 0.05
-  _isMock: 0
+  _isMock: 1
 --- !u!4 &1736779537
 Transform:
   m_ObjectHideFlags: 0
