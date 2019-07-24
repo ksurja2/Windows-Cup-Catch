@@ -5,10 +5,10 @@
       <File FileName="Assets/Scripts/BallInGoal.cs" Line="39" Column="48" />
       <File FileName="Assets/Scripts/CatchBall.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/MissedBall.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="12" Column="1" />
       <File FileName="Assets/Scripts/SpawnBall.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/PlayerController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/SimplePlayerController.cs" Line="70" Column="16" />
+      <File FileName="Assets/Scripts/SimplePlayerController.cs" Line="45" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

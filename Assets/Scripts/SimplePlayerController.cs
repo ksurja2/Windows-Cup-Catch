@@ -36,6 +36,15 @@ public class SimplePlayerController : MonoBehaviour {
 	private float flipangle, CalibAngle1=90, CalibTenoAngle;
 	private float MasterForce;
 
+	public GameObject player;
+
+	public float upperXBound = 50f;
+	public float lowerXBound = -50f;
+	public float upperZBound = 60f;
+	public float lowerZBound = -20f;
+	public float upperYBound = 0f;
+	public float lowerYBound = -3.5f;
+
 	private void Awake () {
 		_robot = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> ();
 	}
@@ -78,6 +87,35 @@ public class SimplePlayerController : MonoBehaviour {
 		robotangles = GetJointAngles ();
 		transform.eulerAngles = new Vector3 (robotangles [0] * 180 / Mathf.PI, -robotangles [1] * 180 / Mathf.PI, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
 		handangles = transform.eulerAngles;
+		OutOfBounds ();
+	}
+
+	void OutOfBounds()
+	{
+		float playerPositionX = player.transform.position.x;
+		float playerPositionZ = player.transform.position.z;
+		float playerPositionY = player.transform.position.y;
+
+		if (playerPositionX > upperXBound || playerPositionX < lowerXBound)
+		{
+			playerPositionX = Mathf.Clamp(transform.position.x, lowerXBound, upperXBound);
+			player.transform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+
+		}
+
+		if (playerPositionZ > upperZBound || playerPositionZ < lowerZBound)
+		{
+			playerPositionZ = Mathf.Clamp(transform.position.z, lowerZBound, upperZBound);
+			player.transform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+
+		}
+
+		if (playerPositionY > upperYBound || playerPositionY < lowerYBound)
+		{
+			playerPositionY = Mathf.Clamp(transform.position.y, lowerYBound, upperYBound);
+			player.transform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+
+		}
 	}
 
 	public Vector3 GetVelocity () {
