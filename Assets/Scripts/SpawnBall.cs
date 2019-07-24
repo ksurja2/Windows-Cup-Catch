@@ -11,10 +11,10 @@ public class SpawnBall : MonoBehaviour
     public GameObject ball; //access this object through unity
 
     //perimeter of spawn points
-    public static float lowerSpawnX = -35;
-    public static float upperSpawnX = 35;
-    public static float lowerSpawnZ = -16;
-    public static float upperSpawnZ = 16;
+    public static float lowerSpawnX = -30; //former vals:  -35 to 35 for x, -16 to 16 for z
+    public static float upperSpawnX = 30;
+    public static float lowerSpawnZ = -10;
+    public static float upperSpawnZ = 10;
     public static float height = 50;
 
     // Start is called before the first frame update

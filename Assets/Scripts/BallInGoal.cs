@@ -36,7 +36,7 @@ public class BallInGoal : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.CompareTag("Ball"))
+        if (other.gameObject.CompareTag("Caught"))
         {
             //Destroy(other.gameObject);
             other.transform.position = new Vector3(Random.Range(SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),

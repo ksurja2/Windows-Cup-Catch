@@ -19,7 +19,7 @@ using System.Text;
 public class PlayerController : MonoBehaviour {
 
     // Scales the robot position to more closely appoximate the Unity workspace for this game.
-    private const float kPositionScale = 15.0f;
+    private const float kPositionScale = 95.0f;
 	public float EA_gain;
 
 	private float EAMin = -5.0f, EAMax = 5.0f;

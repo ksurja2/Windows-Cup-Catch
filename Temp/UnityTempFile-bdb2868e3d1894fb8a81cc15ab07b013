@@ -103,6 +103,7 @@ Assets/Scripts/FiniteStateMachine.cs
 Assets/Scripts/MissedBall.cs
 Assets/Scripts/PlayerController.cs
 Assets/Scripts/PlayerMovement.cs
+Assets/Scripts/SimplePlayerController.cs
 Assets/Scripts/SpawnBall.cs
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Runtime.Serialization.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Xml.Linq.dll

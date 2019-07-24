@@ -36,6 +36,7 @@ public class CatchBall : MonoBehaviour
     {
 		if (other.CompareTag ("Ball")) {
 			other.transform.parent = null;
+			other.transform.tag = "Caught";
 			//other.attachedRigidbody.useGravity = true;
 			Debug.Log ("Exit");
 		}

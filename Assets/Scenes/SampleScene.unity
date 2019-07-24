@@ -575,12 +575,29 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 704084152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b04f7d8eff044c92a6be5a3d5fb22bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EA_gain: 0
+  forceText: {fileID: 1712753265}
+  breaktime: 1
+  _toolForceQ: {x: 0, y: 0, z: 0, w: 0}
+  _teneoTorqueQ: 0
+--- !u!114 &704084159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 704084152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06040ee775862466c9142a884ce34bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EA_gain: 0
+  objectScale: 40
   forceText: {fileID: 1712753265}
   breaktime: 1
   _toolForceQ: {x: 0, y: 0, z: 0, w: 0}
@@ -981,7 +998,7 @@ Transform:
   m_GameObject: {fileID: 1262108683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7.5, z: 0}
-  m_LocalScale: {x: 12, y: 3, z: 12}
+  m_LocalScale: {x: 15, y: 3, z: 15}
   m_Children:
   - {fileID: 207417256}
   - {fileID: 1913333966}
@@ -1295,15 +1312,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 923d3286900da1d499aa1369fe263772, type: 3}
       propertyPath: m_LocalScale.x
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 923d3286900da1d499aa1369fe263772, type: 3}
       propertyPath: m_LocalScale.y
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 923d3286900da1d499aa1369fe263772, type: 3}
       propertyPath: m_LocalScale.z
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 923d3286900da1d499aa1369fe263772, type: 3}
       propertyPath: m_Name
