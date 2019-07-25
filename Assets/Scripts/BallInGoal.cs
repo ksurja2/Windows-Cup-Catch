@@ -49,6 +49,7 @@ public class BallInGoal : MonoBehaviour
         }
 
         MoveGoal();
+		OutOfBounds();
         DisplayText();
         
     }
@@ -71,7 +72,7 @@ public class BallInGoal : MonoBehaviour
 		Vector3 newPos = new Vector3 (newXPos, 0.0f, newZPos) + thisPos; //move to a point around current position
 		transform.position = newPos;
 
-		OutOfBounds();
+	
     }
 
 	void OutOfBounds(){
@@ -91,7 +92,7 @@ public class BallInGoal : MonoBehaviour
 			MoveGoal ();
 		}
 
-	}
+	} 
 
 	/*Vector3 posOne = new Vector3(-40, -7.5f, -7);
         Vector3 posTwo = new Vector3(40, -7.5f, -7);
