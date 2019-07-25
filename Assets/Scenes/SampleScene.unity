@@ -530,7 +530,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 704084152}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c56c3f0eca878a46b7a76f2d25701aa, type: 3}
   m_Name: 
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 704084152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06040ee775862466c9142a884ce34bbe, type: 3}
   m_Name: 
@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: {fileID: 524892591}
   radiusOfWalk: 20
-  workspaceBound: 3
+  numToHome: 3
 --- !u!1 &1558111334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseMovementScale: 0.2
   mouseScrollWheelScale: 0.05
-  _isMock: 0
+  _isMock: 1
 --- !u!4 &1736779537
 Transform:
   m_ObjectHideFlags: 0

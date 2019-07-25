@@ -8,28 +8,36 @@ using UnityEngine.UI; //for Text object
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
-	public float radiusOfWalk = 20.0f;
-	public float workspaceBound = 3.0f;
+	public float radiusOfWalk = 25.0f;
+	private Vector3 homePos = new Vector3 (0.0f, -7.5f, 0.0f);
 
-    //initialize counter for captured targets
     private int numCaptured;
+	public int numToHome = 3; //number of balls caught before resetting goal
+	private int backToHome;
 
 
     private void Start()
     {
-		
+		backToHome = numToHome;
         DisplayText();
-        numCaptured = 0;
+		numCaptured = 0;     //initialize counter for captured targets
     }
 
     //Test Goal Movement
-    /*private void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             MoveGoal();
         }
-    }*/
+
+
+		//reset goal to home
+		if (Input.GetMouseButtonDown (1)) {
+			transform.position = homePos;
+		}
+
+    }
 
     //if target enters Goal, destroy object and increment counter 
     //BallFSM, CASE #5
@@ -45,12 +53,18 @@ public class BallInGoal : MonoBehaviour
             other.GetComponent<Rigidbody>().velocity = Vector3.zero; //Get Rigidbody and set velocity to (0f, 0f, 0f)
 
             numCaptured += 1;
+			backToHome -= 1;
 			other.transform.tag = "Ball";
         }
 
-        MoveGoal();
-		OutOfBounds();
-        DisplayText();
+		if (backToHome == 0) {
+			transform.position = homePos;
+			backToHome = numToHome;
+		} else {
+			MoveGoal ();
+		}
+        
+		DisplayText();
         
     }
 
@@ -64,7 +78,9 @@ public class BallInGoal : MonoBehaviour
     void MoveGoal()
     {
 
-		Vector2 newPosCoordinates = Random.insideUnitCircle * radiusOfWalk;
+		//Vector2 newPosCoordinates = Random.insideUnitCircle * radiusOfWalk; //varying radii
+		float directionAngle = OutOfBounds();
+		Vector2 newPosCoordinates = new Vector2 (Mathf.Cos(directionAngle), Mathf.Sin(directionAngle)) * radiusOfWalk;
 		float newXPos = newPosCoordinates [0];
 		float newZPos = newPosCoordinates [1];
 
@@ -75,23 +91,43 @@ public class BallInGoal : MonoBehaviour
 	
     }
 
-	void OutOfBounds(){
-		
+	float OutOfBounds(){
+
 		float xPos = transform.position.x;
 		float zPos = transform.position.z;
-		float minX = SpawnBall.lowerSpawnX + workspaceBound; 
-		float maxX = SpawnBall.upperSpawnX + workspaceBound;
-		float minZ = SpawnBall.lowerSpawnZ + workspaceBound;
-		float maxZ = SpawnBall.upperSpawnZ + workspaceBound;
+		float minX = SpawnBall.lowerSpawnX; 
+		float maxX = SpawnBall.upperSpawnX;
+		float minZ = SpawnBall.lowerSpawnZ;
+		float maxZ = SpawnBall.upperSpawnZ;
 
-		if (xPos > maxX || xPos < minX) {
-			MoveGoal ();
+		float pi = Mathf.PI;
+		float directionAngle = Random.Range(0, pi);
+
+		//corner cases
+		if (xPos > maxX && zPos > maxZ) { //top right
+			directionAngle = Random.Range (pi, (3 * pi / 2));
+		} else if (xPos > maxX && zPos < minZ) { //bottom right
+			directionAngle = Random.Range (pi / 2, pi);
+		} else if (xPos < minX && zPos > maxZ) { //top left
+			directionAngle = Random.Range (0, -pi / 2);
+		} else if (xPos < minX && zPos < minZ) { //bottom left
+			directionAngle = Random.Range (0, pi / 2);
+		} else {
+			//edge cases
+			if (xPos > maxX) { //right
+				directionAngle = Random.Range (pi / 2, (3 * pi / 2));	
+			} else if (xPos < minX) { //left
+				directionAngle = Random.Range (-pi / 2, pi / 2);
+			}
+			if (zPos > maxZ) { //top
+				directionAngle = Random.Range (-pi, 0);
+			} else if (zPos > minZ) { //bottom
+				directionAngle = Random.Range (0, pi);
+			}
 		}
 
-		if (zPos > maxZ || zPos < minZ) {
-			MoveGoal ();
-		}
 
+		return directionAngle;
 	} 
 
 	/*Vector3 posOne = new Vector3(-40, -7.5f, -7);
