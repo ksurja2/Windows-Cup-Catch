@@ -596,7 +596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06040ee775862466c9142a884ce34bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EA_gain: 0
   objectScale: 40
   forceText: {fileID: 1712753265}
   breaktime: 1
@@ -1369,7 +1368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseMovementScale: 0.2
   mouseScrollWheelScale: 0.05
-  _isMock: 1
+  _isMock: 0
 --- !u!4 &1736779537
 Transform:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ using UnityEngine.UI; //for Text object
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
-	public float radiusOfWalk = 5.0f;
+	public float radiusOfWalk = 20.0f;
 	public float workspaceBound = 3.0f;
 
     //initialize counter for captured targets
@@ -45,6 +45,7 @@ public class BallInGoal : MonoBehaviour
             other.GetComponent<Rigidbody>().velocity = Vector3.zero; //Get Rigidbody and set velocity to (0f, 0f, 0f)
 
             numCaptured += 1;
+			other.transform.tag = "Ball";
         }
 
         MoveGoal();

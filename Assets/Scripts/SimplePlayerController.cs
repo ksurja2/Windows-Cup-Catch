@@ -9,11 +9,8 @@ using System.Text;
 public class SimplePlayerController : MonoBehaviour {
 
 	private const float kPositionScale = 95.0f;
-	public float EA_gain;
 	public float objectScale = 40F;
 
-	private float EAMin = -5.0f, EAMax = 5.0f;
-	private float EA_gain0=2.0f, grav_gain0=0f;
 	private Vector3 _currentVelocity = Vector3.zero;
 	private Vector3 _currentPosition = Vector3.zero;
 
@@ -85,7 +82,27 @@ public class SimplePlayerController : MonoBehaviour {
 		_currentVelocity = GetVelocity ();
 		transform.position = _currentPosition;
 		robotangles = GetJointAngles ();
-		transform.eulerAngles = new Vector3 (robotangles [0] * 180 / Mathf.PI, -robotangles [1] * 180 / Mathf.PI, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+
+
+		//transform.eulerAngles = new Vector3 (robotangles [0] * 180 / Mathf.PI, -robotangles [1] * 180 / Mathf.PI, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+
+		//0 out X
+		//Results: 0 rotation on Y axis, tilted to X axis
+		//transform.eulerAngles = new Vector3 (0.0f, -robotangles [1] * 180 / Mathf.PI, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+
+		//0 out Y
+		//Results: still tilted
+		//transform.eulerAngles = new Vector3 (robotangles [0] * 180 / Mathf.PI, 0.0f, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+
+		//0 out Z
+		//Results: cannot pronate/supinate
+		//transform.eulerAngles = new Vector3 (robotangles [0] * 180 / Mathf.PI, -robotangles [1] * 180 / Mathf.PI, 0.0f);
+
+		//0 out X and Y
+		//Results: Yes!!!
+		transform.eulerAngles = new Vector3 (0, 0, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+
+
 		handangles = transform.eulerAngles;
 		OutOfBounds ();
 	}

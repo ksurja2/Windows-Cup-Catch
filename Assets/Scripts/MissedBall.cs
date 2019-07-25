@@ -16,6 +16,7 @@ public class MissedBall : MonoBehaviour
 		other.transform.position = new Vector3 (Random.Range (SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
 			SpawnBall.height, Random.Range (SpawnBall.lowerSpawnZ, SpawnBall.upperSpawnZ));
 		other.GetComponent<Rigidbody> ().velocity = Vector3.zero; //Get Rigidbody and set velocity to (0f, 0f, 0f)
+
 		
 		if (other.gameObject.CompareTag ("Ball")) {
 
@@ -23,7 +24,7 @@ public class MissedBall : MonoBehaviour
 
 		} else if (other.gameObject.CompareTag ("Caught")) {
 			missedCatchCount += 1;
+			other.transform.tag = "Ball";
 		}
-
     }
 }

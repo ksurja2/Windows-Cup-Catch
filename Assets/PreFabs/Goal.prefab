@@ -293,6 +293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 0}
+  radiusOfWalk: 20
+  workspaceBound: 3
 --- !u!4 &5719092760178777829
 Transform:
   m_ObjectHideFlags: 0
