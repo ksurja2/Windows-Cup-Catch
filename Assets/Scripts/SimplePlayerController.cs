@@ -25,13 +25,17 @@ public class SimplePlayerController : MonoBehaviour {
 	private Vector3 target_pos, target_angles, handangles;
 	private Vector4 robotangles;
 
-	public Text forceText;
+	public Text PSText;
 	public bool breaktime;
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
 	private float flipangle, CalibAngle1=90, CalibTenoAngle;
-	private float MasterForce;
+	private float MasterForce = 0; //figure out what this does
+
+	private float PSFactor; //determines how much the player must pronate to flip bucket
+	private float minPSFactor = 1.0f;
+	private float maxPSFactor = 2.0f;
 
 	public GameObject player;
 
@@ -66,15 +70,25 @@ public class SimplePlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		PSFactor = PSFactor + Input.GetAxis("Vertical") * 0.1f;
+
+		//breaktime = _target.breaktime;
+		PSFactor = Mathf.Clamp (Mathf.Round (PSFactor * 10) / 10, minPSFactor, maxPSFactor);
+
+
+
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
 			transform.localScale = new Vector3(-objectScale, objectScale, objectScale);
-			flipangle = -90f;
+			flipangle = -180f;
 
 		}
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
 			transform.localScale = new Vector3(objectScale, objectScale, objectScale);
-			flipangle = 90f;
+			flipangle = 180f;
 		}
+
+		UpdatePSText ();
 	}
 
 	private void FixedUpdate ()    {
@@ -100,7 +114,8 @@ public class SimplePlayerController : MonoBehaviour {
 
 		//0 out X and Y
 		//Results: Yes!!!
-		transform.eulerAngles = new Vector3 (0, 0, flipangle - 90 - robotangles [3] * 180 / Mathf.PI);
+		transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * 1.5f);
+		//transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * PSFactor);
 
 
 		handangles = transform.eulerAngles;
@@ -184,5 +199,9 @@ public class SimplePlayerController : MonoBehaviour {
 
 		return RobotCommandExtensions.RobotCommandForceTorque (_toolForce*MasterForce, coreTorque, _teneoTorque*MasterForce);
 
+	}
+
+	private void UpdatePSText(){
+		PSText.text = "PS Factor ↑↓: " + PSFactor.ToString ();
 	}
 }
