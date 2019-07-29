@@ -26,16 +26,18 @@ public class SimplePlayerController : MonoBehaviour {
 	private Vector4 robotangles;
 
 	public Text PSText;
+	public Text FlipAngleText;
 	public bool breaktime;
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
-	private float flipangle, CalibAngle1=90, CalibTenoAngle;
+	private float flipangle = 180;
+	private float CalibAngle1=90, CalibTenoAngle;
 	private float MasterForce = 0; //figure out what this does
 
-	private float PSFactor; //determines how much the player must pronate to flip bucket
+	private float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket
 	private float minPSFactor = 1.0f;
-	private float maxPSFactor = 2.0f;
+	private float maxPSFactor = 4.0f;
 
 	public GameObject player;
 
@@ -76,19 +78,24 @@ public class SimplePlayerController : MonoBehaviour {
 		//breaktime = _target.breaktime;
 		PSFactor = Mathf.Clamp (Mathf.Round (PSFactor * 10) / 10, minPSFactor, maxPSFactor);
 
+		flipangle = flipangle + Input.GetAxis("Horizontal") * 5.0f ;
+		flipangle = Mathf.Clamp (Mathf.Round (flipangle * 10) / 10, 0, 360);
 
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
 			transform.localScale = new Vector3(-objectScale, objectScale, objectScale);
-			flipangle = -180f;
+			//flipangle = -180f; //fully supinate to have upright bucket
+			flipangle = -flipangle;
 
 		}
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
 			transform.localScale = new Vector3(objectScale, objectScale, objectScale);
-			flipangle = 180f;
+			//flipangle = 180f;
+			//flipangle = flipangle;
 		}
 
 		UpdatePSText ();
+		UpdateFlipAngleText ();
 	}
 
 	private void FixedUpdate ()    {
@@ -114,8 +121,8 @@ public class SimplePlayerController : MonoBehaviour {
 
 		//0 out X and Y
 		//Results: Yes!!!
-		transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * 1.5f);
-		//transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * PSFactor);
+		//transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * 1.5f);
+		transform.eulerAngles = new Vector3 (0, 0, (flipangle - 90 - robotangles [3] * 180 / Mathf.PI) * PSFactor);
 
 
 		handangles = transform.eulerAngles;
@@ -203,5 +210,10 @@ public class SimplePlayerController : MonoBehaviour {
 
 	private void UpdatePSText(){
 		PSText.text = "PS Factor ↑↓: " + PSFactor.ToString ();
+
+	}
+
+	private void UpdateFlipAngleText(){
+		FlipAngleText.text = "Flip Angle ← →: " + flipangle.ToString ();
 	}
 }

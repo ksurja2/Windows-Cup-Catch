@@ -42,8 +42,5 @@ public class CatchBall : MonoBehaviour
 		}
 		//isInBucket = false;
     }
-
-	void Update(){
-
-	}
+		
 }
