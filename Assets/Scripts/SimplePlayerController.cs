@@ -27,12 +27,14 @@ public class SimplePlayerController : MonoBehaviour {
 
 	public Text PSText;
 	public Text FlipAngleText;
+	public Text GravText;
 	public bool breaktime;
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
 	private float flipangle = 180;
 	private float CalibAngle1=90, CalibTenoAngle;
+	private float grav_gain0 = 0f; 
 	private float MasterForce = 0; //figure out what this does
 
 	private float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket
@@ -73,6 +75,17 @@ public class SimplePlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (Input.GetKeyDown ("]")) {
+			grav_gain0 = grav_gain0 + 0.1f;
+
+		}
+
+		if (Input.GetKeyDown ("[")) {
+			grav_gain0 = grav_gain0 - 0.1f;
+		}
+		grav_gain0 = Mathf.Clamp (Mathf.Round (grav_gain0 * 10) / 10, -5, 5);
+		_robot.UgcGain = grav_gain0;
+
 		PSFactor = PSFactor + Input.GetAxis("Vertical") * 0.1f;
 
 		//breaktime = _target.breaktime;
@@ -96,6 +109,7 @@ public class SimplePlayerController : MonoBehaviour {
 
 		UpdatePSText ();
 		UpdateFlipAngleText ();
+		UpdateGravText ();
 	}
 
 	private void FixedUpdate ()    {
@@ -210,7 +224,10 @@ public class SimplePlayerController : MonoBehaviour {
 
 	private void UpdatePSText(){
 		PSText.text = "PS Factor ↑↓: " + PSFactor.ToString ();
+	}
 
+	private void UpdateGravText(){
+		GravText.text = " Grav []: " + grav_gain0.ToString ();
 	}
 
 	private void UpdateFlipAngleText(){

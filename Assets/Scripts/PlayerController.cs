@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 		EA_gain0 = EA_gain0 + Input.GetAxis("Vertical") * 0.1f;
 		 
 		//breaktime = _target.breaktime;
-			EA_gain = Mathf.Clamp (Mathf.Round (EA_gain0 * 10) / 10, EAMin, EAMax);
+			EA_gain =  Mathf.Clamp (Mathf.Round (EA_gain0 * 10) / 10, EAMin, EAMax);
 
 		if (breaktime == true) {
 			MasterForce = 0;
