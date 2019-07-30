@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 
+
+
 public class SimplePlayerController : MonoBehaviour {
 
 	private const float kPositionScale = 95.0f;
@@ -32,13 +34,13 @@ public class SimplePlayerController : MonoBehaviour {
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
-	private float flipangle = 180;
+	public float flipangle = 180;
 	private float CalibAngle1=90, CalibTenoAngle;
-	private float grav_gain0 = 0f; 
+	public float grav_gain0 = 0f; 
 	private float MasterForce = 0; //figure out what this does
 
-	private float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket
-	private float minPSFactor = 1.0f;
+	public float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket
+	private float minPSFactor = 0.6f;
 	private float maxPSFactor = 4.0f;
 
 	public GameObject player;

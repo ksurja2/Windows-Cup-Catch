@@ -4,7 +4,15 @@ using UnityEngine;
 using UnityEngine.UI; //for Text object
 
 
-//This script destroys captured ball objects and increments the player's score
+/*<summary> 
+* Attach this script to the Goal! gameobject.
+* This script increments the player's score when a "caught" ball is successfully
+* placed in the goal. It then resets the ball prefab to a random spawn
+* point upon collision. The goal then moves to a random spot within a radius,
+* but after a set number of movements will return to its "home" position.
+</summary> */
+
+
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
@@ -26,10 +34,10 @@ public class BallInGoal : MonoBehaviour
     //Test Goal Movement
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             MoveGoal();
-        }
+        }*/
 
 
 		//reset goal to home
@@ -54,12 +62,12 @@ public class BallInGoal : MonoBehaviour
 
             numCaptured += 1;
 			backToHome -= 1;
-			other.transform.tag = "Ball";
+			other.transform.tag = "Ball"; //reset tag
         }
 
 		if (backToHome == 0) {
 			transform.position = homePos;
-			backToHome = numToHome;
+			backToHome = numToHome;  //return goal to center after certain amount of movement
 		} else {
 			MoveGoal ();
 		}
@@ -72,8 +80,7 @@ public class BallInGoal : MonoBehaviour
     {
         score.text = "Score: " + numCaptured.ToString();
     }
-
-	//FIX ME
+		
 	//create random walk of radius x around previous goal position (within workspace)
     void MoveGoal()
     {

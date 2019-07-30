@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//attach this code to main camera
-//This script spawns the falling target within a workspace and defines workspace boundaries
+/* <summary>
+* Attach this code to main camera
+* This script spawns the falling target within a workspace and defines workspace boundaries 
+</summary>*/
+
 public class SpawnBall : MonoBehaviour
 {
     public float delay = 1.0f;   //change delay

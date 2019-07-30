@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Destroy all instances of objects tagged "Ball" which pass through the floor
+/*<summary>
+* Attach this script to the Floor game object
+* Reset all instances of ball prefab which pass through the floor, and count number
+* missed by player and caught by player 
+* </summary>*/
+
 public class MissedBall : MonoBehaviour
 {
     int missedBallCount = 0;
