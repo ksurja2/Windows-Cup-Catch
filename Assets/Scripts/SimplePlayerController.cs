@@ -89,11 +89,28 @@ public class SimplePlayerController : MonoBehaviour {
 		_robot.UgcGain = grav_gain0;
 
 		PSFactor = PSFactor + Input.GetAxis("Vertical") * 0.1f;
+		//allows update while paused
+		if (Input.GetKeyDown(KeyCode.DownArrow)){
+			PSFactor -= 0.1f;
+		}
 
-		//breaktime = _target.breaktime;
+		if (Input.GetKeyDown(KeyCode.UpArrow)){
+				PSFactor += 0.1f;
+		}
+
 		PSFactor = Mathf.Clamp (Mathf.Round (PSFactor * 10) / 10, minPSFactor, maxPSFactor);
 
+
+
 		flipangle = flipangle + Input.GetAxis("Horizontal") * 5.0f ;
+
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			flipangle -= 5;
+		}
+
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			flipangle += 5;
+		}
 		flipangle = Mathf.Clamp (Mathf.Round (flipangle * 10) / 10, 0, 360);
 
 

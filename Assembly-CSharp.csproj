@@ -51,9 +51,10 @@
      <Compile Include="Assets\Scripts\CatchBall.cs" />
      <Compile Include="Assets\Scripts\Help.cs" />
      <Compile Include="Assets\Scripts\MissedBall.cs" />
+     <Compile Include="Assets\Scripts\MySaveData.cs" />
+     <Compile Include="Assets\Scripts\OldMovementScripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\OldMovementScripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\PausePlay.cs" />
-     <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\SpawnBall.cs" />

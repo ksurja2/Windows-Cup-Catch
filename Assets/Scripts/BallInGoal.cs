@@ -19,7 +19,7 @@ public class BallInGoal : MonoBehaviour
 	public float radiusOfWalk = 25.0f;
 	private Vector3 homePos = new Vector3 (0.0f, -7.5f, 0.0f);
 
-    private int numCaptured;
+    public int numCaptured;
 	public int numToHome = 7; //number of balls caught before resetting goal
 	private int backToHome;
 
@@ -82,7 +82,7 @@ public class BallInGoal : MonoBehaviour
     }
 		
 	//create random walk of radius x around previous goal position (within workspace)
-    void MoveGoal()
+	public Vector3 MoveGoal()
     {
 
 		//Vector2 newPosCoordinates = Random.insideUnitCircle * radiusOfWalk; //varying radii
@@ -94,6 +94,7 @@ public class BallInGoal : MonoBehaviour
 		Vector3 thisPos = transform.position; //get current position of goal
 		Vector3 newPos = new Vector3 (newXPos, 0.0f, newZPos) + thisPos; //move to a point around current position
 		transform.position = newPos;
+		return newPos;
 
 	
     }

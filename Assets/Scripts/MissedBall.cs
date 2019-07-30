@@ -11,8 +11,8 @@ using UnityEngine;
 
 public class MissedBall : MonoBehaviour
 {
-    int missedBallCount = 0;
-	int missedCatchCount = 0;
+    public int missedBallCount = 0;
+	public 	int missedCatchCount = 0;
 
     void OnTriggerEnter(Collider other)
     {
