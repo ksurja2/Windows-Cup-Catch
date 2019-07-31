@@ -49,8 +49,8 @@ public class SimplePlayerController : MonoBehaviour {
 	public float lowerXBound = -50f;
 	public float upperZBound = 60f;
 	public float lowerZBound = -20f;
-	public float upperYBound = 0f;
-	public float lowerYBound = -3.5f;
+	public float upperYBound = 3.5f;
+	public float lowerYBound = 0.0f;
 
 	private void Awake () {
 		_robot = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> ();

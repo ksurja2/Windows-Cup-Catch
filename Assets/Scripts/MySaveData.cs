@@ -8,10 +8,18 @@ using UnityEngine.UI;
 
 public class MySaveData : MonoBehaviour {
 
+	/*<summary>
+	 * Attach this script to the player game object 
+	 * </summary> */
+
 	//misc.
 	float theTime;
 	private bool firstrun;
 	public InputField mainInputField;
+	private PausePlay _pauseStatus;
+	private Help _menuStatus;
+	private bool breaktime; //is the game paused?
+	private string EA_Phrase; //is error augmentation applied? AKA does PS != 1?
 
 	//reference other scripts
 	private MissedBall _floorData;
@@ -27,10 +35,11 @@ public class MySaveData : MonoBehaviour {
 	public Text FileStatus;
 
 	//player data
-	private float grav_gain0;
-	private float PSFactor;
-	private float flipangle;
+	private float grav_gain0, grav_gain0_last;
+	private float PSFactor, PSFactor_last;
+	private float flipangle, flipangle_last;
 
+	private Vector3 _currentRobotForces = Vector3.zero;
 	private Vector3 _currentRobotVelocity = Vector3.zero;
 
 	//ball data
@@ -47,10 +56,15 @@ public class MySaveData : MonoBehaviour {
 
 	void Awake ()
 	{
-		_floorData = GameObject.Find ("floor").GetComponent<MissedBall> ();  
+		breaktime = false;
+
+		_floorData = GameObject.Find ("Floor").GetComponent<MissedBall> ();  
 		_goalData = GameObject.Find ("Goal!").GetComponent<BallInGoal> (); 
 		_playerData = GameObject.Find ("Player").GetComponent<SimplePlayerController> ();
 		_robotStates = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> ();
+
+		_menuStatus = GameObject.Find ("? Button").GetComponent<Help> ();
+		_pauseStatus = GameObject.Find ("Main Camera").GetComponent<PausePlay> (); 
 
 		string m_Path = Application.dataPath;
 	}
@@ -66,6 +80,11 @@ public class MySaveData : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
+		/*if (_menuStatus.breaktime || _pauseStatus.breaktime) {
+			breaktime = true;
+		} else {
+			breaktime = false;
+		} */
 
 		subjname = mainInputField.text;
 		//Activate function when detected new filename
@@ -81,15 +100,27 @@ public class MySaveData : MonoBehaviour {
 		caughtToFloor = _floorData.missedCatchCount;
 		missedToFloor = _floorData.missedBallCount;
 
+		ballTouchdown = _floorData.fallenPos;
+
 		//goal data
-		goalPos = _goalData.MoveGoal();
+		goalPos = _goalData.thisPos;
 
 
-		//FIX ME:  ADD LAST SUFFIX TO CHANGING DATA
-		/*if (EA_gain != EA_gain_last) {
+		if (grav_gain0 != grav_gain0_last) { 
 			SubjUpdated (subjname);
+		}
 
-		} */
+		if (PSFactor != PSFactor_last) {
+			SubjUpdated (subjname);
+		}
+
+		if (flipangle != flipangle_last) {
+			SubjUpdated (subjname);
+		}
+
+		grav_gain0_last = grav_gain0;
+		PSFactor_last = PSFactor;
+		flipangle_last = flipangle;
 
 		float x = transform.position.x;
 		float y = transform.position.y;
@@ -99,14 +130,116 @@ public class MySaveData : MonoBehaviour {
 		float q2 = transform.eulerAngles [1];
 		float q3 = transform.eulerAngles [2];
 
-		//EA_gain_last = EA_gain;
+		//_currentRobotPosition = GetPosition ();
+		_currentRobotVelocity = GetVelocity ();
+
+		float xvel = _currentRobotVelocity [0];
+		float yvel = _currentRobotVelocity [1];
+		float zvel = _currentRobotVelocity [2];
+
+		_currentRobotForces = _playerData._toolForceQ;
+		float fx = _currentRobotForces [0];
+		float fy = _currentRobotForces [1];
+		float fz = _currentRobotForces [2];
+		float torque =  _playerData._teneoTorqueQ;
+
+
+		if (breaktime == false) {
+			mainInputField.DeactivateInputField();
+
+			StreamWriter sw = File.AppendText (path);
+			//sw.WriteLine (theTime + "," + x + "," + y + "," + z + "," + q1 + "," + q2 + "," + q3 + "," + EA_gain + "," + xr + "," + yr + "," + zr + "," + q1r + "," + q2r + "," + q3r + "," + xvel + "," + yvel + "," + zvel + "," + fx + "," + fy + "," + fz + "," + torque);
+			//sw.WriteLine ("I'm facing " + transform.forward);
+
+			sw.WriteLine (theTime + "," + x + "," + y + "," + z + "," 
+				+ q1 + "," + q2 + "," + q3 + "," 
+				+ xvel + "," + yvel + "," + zvel + "," 
+				+ fx + "," + fy + "," + fz + "," + torque + ","
+				+ grav_gain0 + ","  + flipangle + "," + PSFactor + "," 
+				+ score + "," + caughtToFloor + "," + missedToFloor + ","
+				+ ballTouchdown + "," + goalPos);
+			sw.Close ();
+			//Debug.Log ("write to file");
+
+		}
+			
 
 		theTime = Time.time;
 
 	}
 
+	void Update ()
+	{
+		var fileInfo = new System.IO.FileInfo(path);
+		FileStatusString = fileInfo.Length.ToString();
+		updateFileText ();
+	}
+
+
+
+		
+
+	private void updateFileText(){
+		FileStatus.text = "File Status: " + FileStatusString;
+
+
+	}
+
+
 	public void SubjUpdated(string text)
 	{
-		
+		FileStatus.text = "File Status: " + FileStatusString;
+		 
+		if (PSFactor != 1.0f) {
+			EA_Phrase = "PS ERROR ON";
+		} else if (PSFactor == 1.0f) {
+			EA_Phrase = "PS ERROR OFF";
+		}
+
+		//check if directory doesn't exit
+		if(!Directory.Exists("CupCatch_Data"))
+		{    
+			//if it doesn't, create it
+			Directory.CreateDirectory("CupCatch_Data");
+
+		}
+
+		Debug.Log("New Entry Detected "  + text);
+		System.DateTime theTime = System.DateTime.Now;
+		string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
+		string pname = string.Concat ("CupCatch_Data/", subjname, EA_Phrase, datetime, ".csv");
+
+		path = @pname;
+
+
+		// This text is added only once to the file.
+		if (!File.Exists (path)) {
+			// Create a file to write to.
+			using (StreamWriter sw = File.CreateText (path)) {
+				//sw.WriteLine ("time," + "xdata," + "ydata," + "zdata," + "q1," + "q2," + "q3," + "ea," + "xref," + "yref," + "zref," + "q1ref," + "q2ref," + "q3ref," + "xvel," + "yvel," + "zvel," + "fx," + "fy," + "fz,"+ "torque");
+				sw.WriteLine (theTime + "," + "x" + "," + "y" + "," + "z" + "," 
+					+ "q1" + "," + "q2" + "," + "q3" + "," 
+					+ "xvel" + "," + "yvel" + "," + "zvel" + "," 
+					+ "fx" + "," + "fy" + "," + "fz" + "," + "torque" + ","
+					+ "grav_gain0" + ","  + "flipangle" + "," + "PSFactor" + "," 
+					+ "score" + "," + "caughtToFloor" + "," + "missedToFloor" + ","
+					+ "ballTouchdown" + "," + "goalPos");
+			}	
+		}
+	}
+
+	public Vector3 GetVelocity ()
+	{
+		return _robotStates.GetToolVelocity ();
+	}
+
+	public Vector3 GetPosition ()
+	{
+		return _robotStates.GetToolPosition ();
+	}
+
+	public Vector4 GetJointAngles ()
+	{
+		return  _robotStates.GetJointPositions ();
 	}
 }

@@ -7,6 +7,7 @@ public class Help : MonoBehaviour {
 
 	public GameObject HelpMenu;
 	public bool isActive;
+	public bool breaktime;
 
 	public void OpenHelpMenu(){
 
@@ -15,10 +16,12 @@ public class Help : MonoBehaviour {
 			isActive = HelpMenu.activeSelf; //set bool to menu status
 			HelpMenu.SetActive (!isActive);
 			Time.timeScale = 0.0f;
+			breaktime = true;
 		}
 
 		if (isActive) {
 			Time.timeScale = 1.0f;
+			breaktime = false;
 		}
 	}
 
