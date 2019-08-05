@@ -13,6 +13,7 @@ public class MissedBall : MonoBehaviour
 {
     public int missedBallCount = 0;
 	public 	int missedCatchCount = 0;
+	public Vector3 newPos;
 	public Vector3 fallenPos;
 
     void OnTriggerEnter(Collider other)
@@ -21,7 +22,7 @@ public class MissedBall : MonoBehaviour
 		fallenPos = other.transform.position;
 
 		//Destroy(other.gameObject);
-		other.transform.position = new Vector3 (Random.Range (SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
+		newPos = new Vector3 (Random.Range (SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
 			SpawnBall.height, Random.Range (SpawnBall.lowerSpawnZ, SpawnBall.upperSpawnZ));
 		other.GetComponent<Rigidbody> ().velocity = Vector3.zero; //Get Rigidbody and set velocity to (0f, 0f, 0f)
 
@@ -35,6 +36,6 @@ public class MissedBall : MonoBehaviour
 			other.transform.tag = "Ball";
 		}
 
-		fallenPos = other.transform.position;
+		other.transform.position = newPos;
     }
 }

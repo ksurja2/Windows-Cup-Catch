@@ -33,6 +33,8 @@ public class MySaveData : MonoBehaviour {
 	private string FileStatusString;
 
 	public Text FileStatus;
+	public Text Prompt;
+	public Text Play;
 
 	//player data
 	private float grav_gain0, grav_gain0_last;
@@ -56,8 +58,7 @@ public class MySaveData : MonoBehaviour {
 
 	void Awake ()
 	{
-		breaktime = false;
-
+		breaktime = true;
 		_floorData = GameObject.Find ("Floor").GetComponent<MissedBall> ();  
 		_goalData = GameObject.Find ("Goal!").GetComponent<BallInGoal> (); 
 		_playerData = GameObject.Find ("Player").GetComponent<SimplePlayerController> ();
@@ -73,20 +74,21 @@ public class MySaveData : MonoBehaviour {
 	void Start () {
 		mainInputField.text = "Blank_SubjId";
 
-		subjname = mainInputField.text;
+		//subjname = mainInputField.text;
 		firstrun = true;
 	}
+
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		/*if (_menuStatus.breaktime || _pauseStatus.breaktime) {
+		if (_menuStatus.breaktime || _pauseStatus.breaktime) {
 			breaktime = true;
 		} else {
 			breaktime = false;
-		} */
+		} 
 
-		subjname = mainInputField.text;
+
 		//Activate function when detected new filename
 		mainInputField.onEndEdit.AddListener(SubjUpdated);
 
@@ -94,6 +96,14 @@ public class MySaveData : MonoBehaviour {
 		grav_gain0 = _playerData.grav_gain0;
 		PSFactor = _playerData.PSFactor;
 		flipangle = _playerData.flipangle;
+
+		if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
+			//mainInputField.ActivateInputField();
+			SubjUpdated (subjname);
+			firstrun = false;
+
+		}  
+
 
 		//ball data
 		score = _goalData.numCaptured;
@@ -145,7 +155,8 @@ public class MySaveData : MonoBehaviour {
 
 
 		if (breaktime == false) {
-			mainInputField.DeactivateInputField();
+			
+			//mainInputField.DeactivateInputField();
 
 			StreamWriter sw = File.AppendText (path);
 			//sw.WriteLine (theTime + "," + x + "," + y + "," + z + "," + q1 + "," + q2 + "," + q3 + "," + EA_gain + "," + xr + "," + yr + "," + zr + "," + q1r + "," + q2r + "," + q3r + "," + xvel + "," + yvel + "," + zvel + "," + fx + "," + fy + "," + fz + "," + torque);
@@ -174,9 +185,6 @@ public class MySaveData : MonoBehaviour {
 		FileStatusString = fileInfo.Length.ToString();
 		updateFileText ();
 	}
-
-
-
 		
 
 	private void updateFileText(){
@@ -191,9 +199,9 @@ public class MySaveData : MonoBehaviour {
 		FileStatus.text = "File Status: " + FileStatusString;
 		 
 		if (PSFactor != 1.0f) {
-			EA_Phrase = "PS ERROR ON";
+			EA_Phrase = "PS_ON";
 		} else if (PSFactor == 1.0f) {
-			EA_Phrase = "PS ERROR OFF";
+			EA_Phrase = "PS_OFF";
 		}
 
 		//check if directory doesn't exit
@@ -203,7 +211,7 @@ public class MySaveData : MonoBehaviour {
 			Directory.CreateDirectory("CupCatch_Data");
 
 		}
-
+			
 		Debug.Log("New Entry Detected "  + text);
 		System.DateTime theTime = System.DateTime.Now;
 		string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
@@ -242,4 +250,13 @@ public class MySaveData : MonoBehaviour {
 	{
 		return  _robotStates.GetJointPositions ();
 	}
+
+	 public void CloseSubj (string text) {
+		subjname = mainInputField.text;
+		mainInputField.enabled = false;
+		FileStatus.enabled = false;
+		Prompt.enabled = false;
+		Play.enabled = true;
+	} 
+		
 }
