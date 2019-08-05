@@ -211,11 +211,15 @@ public class MySaveData : MonoBehaviour {
 			Directory.CreateDirectory("CupCatch_Data");
 
 		}
+
+		if(!Directory.Exists("CupCatch_Data/" + subjname)){
+			Directory.CreateDirectory ("CupCatch_Data/" + subjname);
+		}
 			
 		Debug.Log("New Entry Detected "  + text);
 		System.DateTime theTime = System.DateTime.Now;
 		string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
-		string pname = string.Concat ("CupCatch_Data/", subjname, EA_Phrase, datetime, ".csv");
+		string pname = string.Concat ("CupCatch_Data/" + subjname + "/", subjname, EA_Phrase, datetime, ".csv");
 
 		path = @pname;
 
