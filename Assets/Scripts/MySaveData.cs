@@ -13,6 +13,7 @@ public class MySaveData : MonoBehaviour {
 	 * </summary> */
 
 	//misc.
+	int fileNum = 1;
 	float theTime;
 	private bool firstrun;
 	public InputField mainInputField;
@@ -40,6 +41,7 @@ public class MySaveData : MonoBehaviour {
 	private float grav_gain0, grav_gain0_last;
 	private float PSFactor, PSFactor_last;
 	private float flipangle, flipangle_last;
+	private float playerRotation;
 
 	private Vector3 _currentRobotForces = Vector3.zero;
 	private Vector3 _currentRobotVelocity = Vector3.zero;
@@ -96,8 +98,14 @@ public class MySaveData : MonoBehaviour {
 		grav_gain0 = _playerData.grav_gain0;
 		PSFactor = _playerData.PSFactor;
 		flipangle = _playerData.flipangle;
+		playerRotation = _playerData.transform.rotation.eulerAngles[2];
+		playerRotation = Mathf.Abs (flipangle - playerRotation);
 
-		if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
+		Debug.Log ("PLAYER ROTATION: " + playerRotation);
+
+		//if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
+
+		if (mainInputField.enabled == false){
 			//mainInputField.ActivateInputField();
 			SubjUpdated (subjname);
 			firstrun = false;
@@ -136,9 +144,9 @@ public class MySaveData : MonoBehaviour {
 		float y = transform.position.y;
 		float z = transform.position.z;
 
-		float q1 = transform.eulerAngles [0];
-		float q2 = transform.eulerAngles [1];
-		float q3 = transform.eulerAngles [2];
+		//float q1 = transform.eulerAngles [0];
+		//float q2 = transform.eulerAngles [1];
+		//float q3 = transform.eulerAngles [2];
 
 		//_currentRobotPosition = GetPosition ();
 		_currentRobotVelocity = GetVelocity ();
@@ -148,30 +156,31 @@ public class MySaveData : MonoBehaviour {
 		float zvel = _currentRobotVelocity [2];
 
 		_currentRobotForces = _playerData._toolForceQ;
-		float fx = _currentRobotForces [0];
-		float fy = _currentRobotForces [1];
-		float fz = _currentRobotForces [2];
-		float torque =  _playerData._teneoTorqueQ;
+		//float fx = _currentRobotForces [0];
+		//float fy = _currentRobotForces [1];
+		//float fz = _currentRobotForces [2];
+		//float torque =  _playerData._teneoTorqueQ;
 
+		StreamWriter sw = File.AppendText (path);
 
 		if (breaktime == false) {
 			
 			//mainInputField.DeactivateInputField();
 
-			StreamWriter sw = File.AppendText (path);
-			//sw.WriteLine (theTime + "," + x + "," + y + "," + z + "," + q1 + "," + q2 + "," + q3 + "," + EA_gain + "," + xr + "," + yr + "," + zr + "," + q1r + "," + q2r + "," + q3r + "," + xvel + "," + yvel + "," + zvel + "," + fx + "," + fy + "," + fz + "," + torque);
-			//sw.WriteLine ("I'm facing " + transform.forward);
 
-			sw.WriteLine (theTime + "," + x + "," + y + "," + z + "," 
-				+ q1 + "," + q2 + "," + q3 + "," 
-				+ xvel + "," + yvel + "," + zvel + "," 
-				+ fx + "," + fy + "," + fz + "," + torque + ","
-				+ grav_gain0 + ","  + flipangle + "," + PSFactor + "," 
-				+ score + "," + caughtToFloor + "," + missedToFloor + ","
-				+ ballTouchdown + "," + goalPos);
+
+			//FIX ME: add trialNumber, blockNumber, spawnPos
+			sw.WriteLine (theTime + "," + x + "," + y + "," + z + ","
+			+ xvel + "," + yvel + "," + zvel + ","
+			+ playerRotation + "," + flipangle + ","
+			+ grav_gain0 + "," + PSFactor + ","
+			+ score + "," + caughtToFloor + "," + missedToFloor + ","
+			+ ballTouchdown + "," + goalPos);
 			sw.Close ();
 			//Debug.Log ("write to file");
 
+		} else {
+			sw.Close ();
 		}
 			
 
@@ -196,48 +205,60 @@ public class MySaveData : MonoBehaviour {
 
 	public void SubjUpdated(string text)
 	{
-		FileStatus.text = "File Status: " + FileStatusString;
-		 
-		if (PSFactor != 1.0f) {
-			EA_Phrase = "PS_ON";
-		} else if (PSFactor == 1.0f) {
-			EA_Phrase = "PS_OFF";
-		}
 
-		//check if directory doesn't exit
-		if(!Directory.Exists("CupCatch_Data"))
-		{    
-			//if it doesn't, create it
-			Directory.CreateDirectory("CupCatch_Data");
-
-		}
-
-		if(!Directory.Exists("CupCatch_Data/" + subjname)){
-			Directory.CreateDirectory ("CupCatch_Data/" + subjname);
-		}
+		if (!string.IsNullOrEmpty (subjname)) { 
 			
-		Debug.Log("New Entry Detected "  + text);
-		System.DateTime theTime = System.DateTime.Now;
-		string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
-		string pname = string.Concat ("CupCatch_Data/" + subjname + "/", subjname, EA_Phrase, datetime, ".csv");
+			FileStatus.text = "File Status: " + FileStatusString;
+		 
+			if (PSFactor != 1.0f) {
+				EA_Phrase = "PS_ON";
+			} else if (PSFactor == 1.0f) {
+				EA_Phrase = "PS_OFF";
+			}
 
-		path = @pname;
+			//check if directory doesn't exit
+			if (!Directory.Exists ("CupCatch_Data")) {    
+				//if it doesn't, create it
+				Directory.CreateDirectory ("CupCatch_Data");
+
+			}
+
+			if (!Directory.Exists ("CupCatch_Data/" + subjname)) {
+				Directory.CreateDirectory ("CupCatch_Data/" + subjname);
+			}
+			
+
+			Debug.Log ("New Entry Detected " + text);
+			System.DateTime theTime = System.DateTime.Now;
+			string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
+			string pname = string.Concat ("CupCatch_Data/" + subjname + "/", subjname, EA_Phrase, datetime, ".csv");
 
 
-		// This text is added only once to the file.
-		if (!File.Exists (path)) {
-			// Create a file to write to.
-			using (StreamWriter sw = File.CreateText (path)) {
-				//sw.WriteLine ("time," + "xdata," + "ydata," + "zdata," + "q1," + "q2," + "q3," + "ea," + "xref," + "yref," + "zref," + "q1ref," + "q2ref," + "q3ref," + "xvel," + "yvel," + "zvel," + "fx," + "fy," + "fz,"+ "torque");
-				sw.WriteLine (theTime + "," + "x" + "," + "y" + "," + "z" + "," 
-					+ "q1" + "," + "q2" + "," + "q3" + "," 
-					+ "xvel" + "," + "yvel" + "," + "zvel" + "," 
-					+ "fx" + "," + "fy" + "," + "fz" + "," + "torque" + ","
-					+ "grav_gain0" + ","  + "flipangle" + "," + "PSFactor" + "," 
+			/*if(File.Exists(pname)){
+				pname = string.Concat("CupCatch_Data/" + subjname + "/", subjname, EA_Phrase, datetime, "(" + fileNum + ")", ".csv");
+				fileNum += 1;
+			} */
+			path = @pname;
+		
+
+			// This text is added only once to the file.
+			if (!File.Exists (path)) {
+				// Create a file to write to.
+				using (StreamWriter sw = File.CreateText (path)) {
+					//sw.WriteLine ("time," + "xdata," + "ydata," + "zdata," + "q1," + "q2," + "q3," + "ea," + "xref," + "yref," + "zref," + "q1ref," + "q2ref," + "q3ref," + "xvel," + "yvel," + "zvel," + "fx," + "fy," + "fz,"+ "torque");
+					sw.WriteLine ("theTime" + "," + "x" + "," + "y" + "," + "z" + ","
+					+ "xvel" + "," + "yvel" + "," + "zvel" + ","
+					+ "playerRotation" + "," + "flipangle" + ","
+					+ "grav_gain0" + "," + "PSFactor" + ","
 					+ "score" + "," + "caughtToFloor" + "," + "missedToFloor" + ","
-					+ "ballTouchdown" + "," + "goalPos");
-			}	
+					+ "ballTouchdownX" + "," + "ballTouchdownY" + "," + "ballTouchdownZ" + ","
+					+ "goalPosX" + "," + "goalPosY" + "," + "goalPosZ");
+				}	
+			}
+		} else {
+			subjname = mainInputField.text;
 		}
+	
 	}
 
 	public Vector3 GetVelocity ()

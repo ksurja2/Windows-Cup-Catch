@@ -39,7 +39,7 @@ public class SimplePlayerController : MonoBehaviour {
 	public float grav_gain0 = 0f; 
 	private float MasterForce = 0; //figure out what this does
 
-	public float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket
+	public float PSFactor = 1.0f; //determines how much the player must pronate to flip bucket; error augmentation
 	private float minPSFactor = 0.6f;
 	private float maxPSFactor = 4.0f;
 
@@ -53,7 +53,7 @@ public class SimplePlayerController : MonoBehaviour {
 	public float lowerYBound = 0.0f;
 
 	private void Awake () {
-		_robot = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> ();
+		_robot = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> (); //establish connection with robot
 	}
 
 	// Use this for initialization
@@ -66,7 +66,7 @@ public class SimplePlayerController : MonoBehaviour {
 			_robot.EnableRobot ();
 
 			//_robot.UgcGain = 1;
-			Debug.Log("Control Loop Time: " + _robot.ControlUpdateTime.ToString ());
+			//Debug.Log("Control Loop Time: " + _robot.ControlUpdateTime.ToString ());
 
 		} else {
 			BurtSharp.SystemLogger.Error ("RobotConnection not found.");
@@ -77,7 +77,7 @@ public class SimplePlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetKeyDown ("]")) {
+		if (Input.GetKeyDown ("]")) { //change gain
 			grav_gain0 = grav_gain0 + 0.1f;
 
 		}
@@ -102,7 +102,7 @@ public class SimplePlayerController : MonoBehaviour {
 
 
 
-		flipangle = flipangle + Input.GetAxis("Horizontal") * 5.0f ;
+		flipangle = flipangle + Input.GetAxis("Horizontal") * 5.0f ; //this angle indicates when the bucket is upright
 
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			flipangle -= 5;
@@ -111,7 +111,7 @@ public class SimplePlayerController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			flipangle += 5;
 		}
-		flipangle = Mathf.Clamp (Mathf.Round (flipangle * 10) / 10, 0, 360);
+		flipangle = Mathf.Clamp (Mathf.Round (flipangle * 10) / 10, 0, 180);
 
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
@@ -162,7 +162,7 @@ public class SimplePlayerController : MonoBehaviour {
 		OutOfBounds ();
 	}
 
-	void OutOfBounds()
+	void OutOfBounds() 
 	{
 		float playerPositionX = player.transform.position.x;
 		float playerPositionZ = player.transform.position.z;
@@ -220,14 +220,14 @@ public class SimplePlayerController : MonoBehaviour {
 		CalibTenoAngle = -Mathf.DeltaAngle ( handangles [2], CalibAngle1)+180.0f;
 
 		if (CalibTenoAngle > 160+180) {
-			Debug.Log ("Teneo Limit high: "  );
+			//Debug.Log ("Teneo Limit high: "  );
 
 			_teneoTorque = _teneoTorque0*Mathf.Clamp(Mathf.Cos(5.0f*(CalibTenoAngle-160 +180)*Mathf.PI/180), 0, 1);
 			//_teneoTorque = 0f;
 		}
 
 		if (CalibTenoAngle < 20+180) {
-			Debug.Log ("Teneo Limit low: "  );
+			//Debug.Log ("Teneo Limit low: "  );
 			//Mathf.Cos((handangles[2]-180+90))
 			_teneoTorque = _teneoTorque0*Mathf.Clamp(Mathf.Cos(5.0f*(CalibTenoAngle-20 +180)*Mathf.PI/180), 0, 1);
 			//_teneoTorque = 0f;

@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\SpawnBall.cs" />
+     <Compile Include="Assets\Scripts\TrialNum.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

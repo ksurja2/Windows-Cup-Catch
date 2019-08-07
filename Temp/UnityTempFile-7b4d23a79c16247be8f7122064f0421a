@@ -108,6 +108,7 @@ Assets/Scripts/PausePlay.cs
 Assets/Scripts/SaveData.cs
 Assets/Scripts/SimplePlayerController.cs
 Assets/Scripts/SpawnBall.cs
+Assets/Scripts/TrialNum.cs
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Runtime.Serialization.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/System.Xml.Linq.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/2.0/UnityScript.dll
