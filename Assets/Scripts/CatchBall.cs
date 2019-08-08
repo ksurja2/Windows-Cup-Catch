@@ -13,7 +13,7 @@ using UnityEngine;
 public class CatchBall : MonoBehaviour
 {
     public GameObject player;
-	public GameObject ball;
+	//public GameObject ball;
 
  
     //upon being caught, convert ball into child of player
@@ -40,5 +40,30 @@ public class CatchBall : MonoBehaviour
 		}
 
     }
+
+	void Update(){ //reset ball to random spawn
+		if (Input.GetMouseButtonDown (1)) {
+
+			Debug.Log ("RC");
+
+			Vector3 newPos = new Vector3 (Random.Range (SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
+				                 SpawnBall.height, Random.Range (SpawnBall.lowerSpawnZ, SpawnBall.upperSpawnZ));
+
+			if (GameObject.FindGameObjectWithTag ("Ball")) {
+				GameObject.FindGameObjectWithTag ("Ball").transform.position = newPos;
+				GameObject.FindGameObjectWithTag ("Ball").GetComponent<Rigidbody> ().velocity = Vector3.zero; 
+			}
+
+			else if(GameObject.FindGameObjectWithTag("Caught")){
+					
+				GameObject.FindGameObjectWithTag("Caught").transform.position = newPos;
+				GameObject.FindGameObjectWithTag("Caught").GetComponent<Rigidbody>().velocity = Vector3.zero;
+				GameObject.FindGameObjectWithTag ("Caught").transform.tag = "Ball";
+
+			}
+		}
+
+	}
+
 		
 }

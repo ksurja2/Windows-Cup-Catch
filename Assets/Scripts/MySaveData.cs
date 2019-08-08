@@ -28,6 +28,7 @@ public class MySaveData : MonoBehaviour {
 	private SimplePlayerController _playerData;
 	private ConnectionSetter _robotStates;
 
+
 	//strings & filepath
 	public string path;
 	private string subjname, subjname_last;
@@ -86,7 +87,7 @@ public class MySaveData : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if (_menuStatus.breaktime || _pauseStatus.breaktime) {
+		if (_menuStatus.breaktime || _pauseStatus.breaktime || _trial.prompt.enabled) {
 			breaktime = true;
 		} else {
 			breaktime = false;
@@ -225,15 +226,18 @@ public class MySaveData : MonoBehaviour {
 
 			}
 
-			if (!Directory.Exists ("CupCatch_Data/" + subjname)) {
+			/*if (!Directory.Exists ("CupCatch_Data/" + subjname)) {
 				Directory.CreateDirectory ("CupCatch_Data/" + subjname);
-			}
+			} */
 				
+			if (!Directory.Exists ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial)) {
+				Directory.CreateDirectory ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial);
+			}
 
 			Debug.Log ("New Entry Detected " + text);
 			System.DateTime theTime = System.DateTime.Now;
 			string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
-			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial, subjname, EA_Phrase, datetime, ".csv");
+			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial + "/", EA_Phrase, datetime, ".csv");
 
 
 			/*if(File.Exists(pname)){

@@ -29,7 +29,7 @@ public class MissedBall : MonoBehaviour
 
 			missedBallCount = 0;
 			missedCatchCount = 0;
-			Debug.Log ("PLEASE RESEST");
+			//Debug.Log ("PLEASE RESET");
 		}
 	}	
 

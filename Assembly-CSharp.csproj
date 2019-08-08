@@ -54,8 +54,8 @@
      <Compile Include="Assets\Scripts\MySaveData.cs" />
      <Compile Include="Assets\Scripts\OldMovementScripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\OldMovementScripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\OldMovementScripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\PausePlay.cs" />
-     <Compile Include="Assets\Scripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\SimplePlayerController.cs" />
      <Compile Include="Assets\Scripts\SpawnBall.cs" />
      <Compile Include="Assets\Scripts\TrialNum.cs" />

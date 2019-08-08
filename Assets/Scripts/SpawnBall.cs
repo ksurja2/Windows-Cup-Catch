@@ -12,7 +12,7 @@ public class SpawnBall : MonoBehaviour
 {
     public float delay = 1.0f;   //change delay
     public GameObject ball; //access this object through unity
-
+	Vector3 newPos;
     //perimeter of spawn points
     public static float lowerSpawnX = -30; //former vals:  -35 to 35 for x, -16 to 16 for z
     public static float upperSpawnX = 30;
@@ -28,6 +28,8 @@ public class SpawnBall : MonoBehaviour
         Spawn();
 
     }
+		
+
 
 
     public void Spawn()

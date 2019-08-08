@@ -46,9 +46,10 @@ public class BallInGoal : MonoBehaviour
 
 
 		//reset goal to home
-		if (Input.GetMouseButtonDown (1)) {
+		/*if (Input.GetMouseButtonDown (1)) {
 			transform.position = homePos;
-		}
+		} */
+
 
 		if (_trialNum.ballCount == _trialNum.resetNum) {
 			if (_trialNum.ballCount == 0) {
