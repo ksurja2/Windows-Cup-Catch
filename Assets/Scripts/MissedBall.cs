@@ -16,6 +16,23 @@ public class MissedBall : MonoBehaviour
 	public Vector3 newPos;
 	public Vector3 fallenPos;
 
+	private TrialNum _trialNum;
+	void Start(){
+
+		_trialNum = GameObject.Find ("Main Camera").GetComponent<TrialNum> ();
+
+	}
+
+	void Update(){
+
+		if (_trialNum.ballCount == _trialNum.resetNum) {
+
+			missedBallCount = 0;
+			missedCatchCount = 0;
+			Debug.Log ("PLEASE RESEST");
+		}
+	}	
+
     void OnTriggerEnter(Collider other)
     {
 
@@ -38,4 +55,6 @@ public class MissedBall : MonoBehaviour
 
 		other.transform.position = newPos;
     }
+
+
 }

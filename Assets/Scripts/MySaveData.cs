@@ -56,7 +56,7 @@ public class MySaveData : MonoBehaviour {
 	//goal data
 	private Vector3 goalPos;
 
-
+	private TrialNum _trial;
 
 	void Awake ()
 	{
@@ -68,6 +68,8 @@ public class MySaveData : MonoBehaviour {
 
 		_menuStatus = GameObject.Find ("? Button").GetComponent<Help> ();
 		_pauseStatus = GameObject.Find ("Main Camera").GetComponent<PausePlay> (); 
+
+		_trial = GameObject.Find ("Main Camera").GetComponent<TrialNum> ();  
 
 		string m_Path = Application.dataPath;
 	}
@@ -101,7 +103,7 @@ public class MySaveData : MonoBehaviour {
 		playerRotation = _playerData.transform.rotation.eulerAngles[2];
 		playerRotation = Mathf.Abs (flipangle - playerRotation);
 
-		Debug.Log ("PLAYER ROTATION: " + playerRotation);
+		//Debug.Log ("PLAYER ROTATION: " + playerRotation);
 
 		//if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
 
@@ -226,12 +228,12 @@ public class MySaveData : MonoBehaviour {
 			if (!Directory.Exists ("CupCatch_Data/" + subjname)) {
 				Directory.CreateDirectory ("CupCatch_Data/" + subjname);
 			}
-			
+				
 
 			Debug.Log ("New Entry Detected " + text);
 			System.DateTime theTime = System.DateTime.Now;
 			string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
-			string pname = string.Concat ("CupCatch_Data/" + subjname + "/", subjname, EA_Phrase, datetime, ".csv");
+			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial, subjname, EA_Phrase, datetime, ".csv");
 
 
 			/*if(File.Exists(pname)){

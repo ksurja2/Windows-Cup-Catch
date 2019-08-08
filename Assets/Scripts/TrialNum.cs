@@ -5,8 +5,12 @@ using UnityEngine.UI;
 public class TrialNum : MonoBehaviour {
 
 	public int ballCount;
-	int trial = 1;
-	public int resetNum = 20;
+	public int trial;
+	public int resetNum = 2;
+
+	int missedBalls;
+	int caughtBalls;
+	int goalBalls;
 
 	public Text trialText;
 
@@ -19,32 +23,61 @@ public class TrialNum : MonoBehaviour {
 		_floorData = GameObject.Find ("Floor").GetComponent<MissedBall> ();  
 		_goalData = GameObject.Find ("Goal!").GetComponent<BallInGoal> (); 
 
+		trial = 1;
 		ballCount = 0;
 		
 	}
-
-
-	//FIX ME
+		
 
 	// Update is called once per frame
 	void Update () {
 
-		if (ballCount < resetNum) {
-			ballCount = _floorData.missedBallCount + _floorData.missedCatchCount + _goalData.numCaptured;
-		}
+		//if (ballCount < resetNum) {
+
+		/*missedBalls = _floorData.missedBallCount;
+		caughtBalls = _floorData.missedCatchCount;
+		goalBalls = _goalData.numCaptured;
+		ballCount = missedBalls + caughtBalls + goalBalls;
+		//Debug.Log (missedBalls);
+		//Debug.Log (caughtBalls);
+		//Debug.Log (goalBalls);
+		Debug.Log ("BallCount: " + ballCount);
+		//}*/
 			
-		if (ballCount == resetNum) {
-			ballCount = 0;
-			trial += 1;
-		}
-			
+
+		UpdateTrialNum ();
 		UpdateText ();
 
 
-	}
+	} 
 
 	void UpdateText(){
 
 		trialText.text = "TRIAL: " + trial;
+	}
+
+	void UpdateTrialNum(){
+		missedBalls = _floorData.missedBallCount;
+		caughtBalls = _floorData.missedCatchCount;
+		goalBalls = _goalData.numCaptured;
+
+
+		if (ballCount == resetNum) {
+			ballCount = 0;
+			missedBalls = 0;
+			caughtBalls = 0;
+			goalBalls = 0;
+			if (ballCount == 0 && missedBalls == 0 && goalBalls == 0) {
+				trial += 1;
+			}
+			Debug.Log ("NEW TRIAL");
+		
+		} else {
+			ballCount = missedBalls + caughtBalls + goalBalls;
+		}
+
+		Debug.Log ("BallCount: " + ballCount);
+
+
 	}
 }

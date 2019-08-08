@@ -24,16 +24,20 @@ public class BallInGoal : MonoBehaviour
 	public int numToHome = 7; //number of balls caught before resetting goal
 	private int backToHome;
 
+	private TrialNum _trialNum;
 
-    private void Start()
+
+    void Start()
     {
 		backToHome = numToHome;
         DisplayText();
 		numCaptured = 0;     //initialize counter for captured targets
+
+		_trialNum = GameObject.Find ("Main Camera").GetComponent<TrialNum> ();
     }
 
     //Test Goal Movement
-    private void Update()
+    void Update()
     {
         /*if (Input.GetMouseButtonDown(0))
         {
@@ -44,6 +48,13 @@ public class BallInGoal : MonoBehaviour
 		//reset goal to home
 		if (Input.GetMouseButtonDown (1)) {
 			transform.position = homePos;
+		}
+
+		if (_trialNum.ballCount == _trialNum.resetNum) {
+			if (_trialNum.ballCount == 0) {
+
+				numCaptured = 0;
+			}
 		}
 
     }
