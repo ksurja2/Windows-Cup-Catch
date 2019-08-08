@@ -51,12 +51,13 @@ public class BallInGoal : MonoBehaviour
 		} */
 
 
-		if (_trialNum.ballCount == _trialNum.resetNum) {
-			if (_trialNum.ballCount == 0) {
-
-				numCaptured = 0;
-			}
-		}
+		if (_trialNum.prompt.enabled) {
+			//if (_trialNum.ballCount == 0) {
+			Debug.Log("RESET SCORE");
+			numCaptured = 0;
+			DisplayText (); 
+			//}
+		} 
 
     }
 

@@ -25,11 +25,11 @@ public class MissedBall : MonoBehaviour
 
 	void Update(){
 
-		if (_trialNum.ballCount == _trialNum.resetNum) {
+		if (_trialNum.prompt.enabled) {
 
 			missedBallCount = 0;
 			missedCatchCount = 0;
-			//Debug.Log ("PLEASE RESET");
+			Debug.Log ("PLEASE RESET");
 		}
 	}	
 

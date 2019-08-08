@@ -77,7 +77,8 @@ public class MySaveData : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mainInputField.text = "Blank_SubjId";
+		string blankString = "Blank_SubjId";
+		mainInputField.text = blankString;
 
 		//subjname = mainInputField.text;
 		firstrun = true;
@@ -234,10 +235,12 @@ public class MySaveData : MonoBehaviour {
 				Directory.CreateDirectory ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial);
 			}
 
+
 			Debug.Log ("New Entry Detected " + text);
 			System.DateTime theTime = System.DateTime.Now;
 			string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
-			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial + "/", EA_Phrase, datetime, ".csv");
+			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial + "/", 
+				subjname +"TRIAL_" + _trial.trial, EA_Phrase, datetime, ".csv");
 
 
 			/*if(File.Exists(pname)){
