@@ -52,6 +52,8 @@ public class SimplePlayerController : MonoBehaviour {
 	public float upperYBound = 3.5f;
 	public float lowerYBound = 0.0f;
 
+	public string hand;
+
 	private void Awake () {
 		_robot = GameObject.Find ("ConnectionSetter").GetComponent<ConnectionSetter> (); //establish connection with robot
 	}
@@ -75,10 +77,12 @@ public class SimplePlayerController : MonoBehaviour {
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
 			flipangle = 0;
+			hand = "LH";
 		}
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
 			flipangle = 180;
+			hand = "RH";
 		}
 	}
 	

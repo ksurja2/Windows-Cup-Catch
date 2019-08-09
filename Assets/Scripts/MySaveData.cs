@@ -47,6 +47,7 @@ public class MySaveData : MonoBehaviour {
 	private float flipangle, flipangle_last;
 	private float playerRotation;
 
+	private string handedness;
 	private Vector3 _currentRobotForces = Vector3.zero;
 	private Vector3 _currentRobotVelocity = Vector3.zero;
 
@@ -85,6 +86,7 @@ public class MySaveData : MonoBehaviour {
 
 		//subjname = mainInputField.text;
 		firstrun = true;
+		handedness = _playerData.hand;
 	}
 
 	
@@ -243,7 +245,7 @@ public class MySaveData : MonoBehaviour {
 			System.DateTime theTime = System.DateTime.Now;
 			string datetime = theTime.ToString ("yyyy_MM_dd_\\T_HHmm\\Z");
 			string pname = string.Concat ("CupCatch_Data/" + subjname + "/" + "TRIAL_" + _trial.trial + "/", 
-				subjname +"TRIAL_" + _trial.trial, EA_Phrase, datetime, ".csv");
+				subjname + "_" + handedness + "_TRIAL_" + _trial.trial, EA_Phrase, datetime, ".csv");
 
 
 			/*if(File.Exists(pname)){
