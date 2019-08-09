@@ -21,7 +21,7 @@ public class BallInGoal : MonoBehaviour
 	private Vector3 homePos = new Vector3 (0.0f, -7.5f, 0.0f);
 
     public int numCaptured;
-	public int numToHome = 7; //number of balls caught before resetting goal
+	public int numToHome = 10; //number of balls caught before resetting goal
 	private int backToHome;
 
 	private TrialNum _trialNum;

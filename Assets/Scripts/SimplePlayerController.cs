@@ -34,7 +34,7 @@ public class SimplePlayerController : MonoBehaviour {
 
 	public Vector4 _toolForceQ = Vector4.zero;
 	public float _teneoTorqueQ = 0f;
-	public float flipangle = 180;
+	public float flipangle; // = 180 for RH, 0 for LH
 	private float CalibAngle1=90, CalibTenoAngle;
 	public float grav_gain0 = 0f; 
 	private float MasterForce = 0; //figure out what this does
@@ -71,6 +71,14 @@ public class SimplePlayerController : MonoBehaviour {
 		} else {
 			BurtSharp.SystemLogger.Error ("RobotConnection not found.");
 
+		}
+
+		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
+			flipangle = 0;
+		}
+
+		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
+			flipangle = 180;
 		}
 	}
 	
@@ -116,14 +124,15 @@ public class SimplePlayerController : MonoBehaviour {
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) {
 			transform.localScale = new Vector3(-objectScale, objectScale, objectScale);
-			//flipangle = -180f; //fully supinate to have upright bucket
-			flipangle = -flipangle;
+			//flipangle = 0f; //fully supinate to have upright bucket
+			//flipangle = -flipangle;
 
 		}
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Right) {
 			transform.localScale = new Vector3(objectScale, objectScale, objectScale);
 			//flipangle = 180f;
 			//flipangle = flipangle;
+
 		}
 
 		UpdatePSText ();

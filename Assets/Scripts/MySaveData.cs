@@ -33,10 +33,13 @@ public class MySaveData : MonoBehaviour {
 	public string path;
 	private string subjname, subjname_last;
 	private string FileStatusString;
+	private string blankString;
 
 	public Text FileStatus;
 	public Text Prompt;
 	public Text Play;
+
+
 
 	//player data
 	private float grav_gain0, grav_gain0_last;
@@ -77,7 +80,7 @@ public class MySaveData : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		string blankString = "Blank_SubjId";
+		blankString = "Blank_SubjId";
 		mainInputField.text = blankString;
 
 		//subjname = mainInputField.text;
@@ -105,7 +108,7 @@ public class MySaveData : MonoBehaviour {
 		playerRotation = _playerData.transform.rotation.eulerAngles[2];
 		playerRotation = Mathf.Abs (flipangle - playerRotation);
 
-		//Debug.Log ("PLAYER ROTATION: " + playerRotation);
+		Debug.Log ("PLAYER ROTATION: " + playerRotation);
 
 		//if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
 
@@ -210,7 +213,7 @@ public class MySaveData : MonoBehaviour {
 	public void SubjUpdated(string text)
 	{
 
-		if (!string.IsNullOrEmpty (subjname)) { 
+		if (!string.IsNullOrEmpty (subjname) && mainInputField.text != blankString) { 
 			
 			FileStatus.text = "File Status: " + FileStatusString;
 		 

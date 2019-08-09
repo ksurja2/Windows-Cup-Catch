@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 /* <summary>
 * Attach this code to main camera
 * This script spawns the falling target within a workspace and defines workspace boundaries 
@@ -13,6 +14,9 @@ public class SpawnBall : MonoBehaviour
     public float delay = 1.0f;   //change delay
     public GameObject ball; //access this object through unity
 	Vector3 newPos;
+
+
+
     //perimeter of spawn points
     public static float lowerSpawnX = -30; //former vals:  -35 to 35 for x, -16 to 16 for z
     public static float upperSpawnX = 30;
@@ -34,9 +38,9 @@ public class SpawnBall : MonoBehaviour
 
     public void Spawn()
     {
-            //X-Z CODE
-        Instantiate(ball, new Vector3(Random.Range(lowerSpawnX, upperSpawnX), height, Random.Range(lowerSpawnZ, upperSpawnZ)), Quaternion.identity);
-        
+        //X-Z CODE
+
+			Instantiate (ball, new Vector3 (Random.Range (lowerSpawnX, upperSpawnX), height, Random.Range (lowerSpawnZ, upperSpawnZ)), Quaternion.identity);
         //spawn only in varying x coordinates
         //Instantiate(smallBall, new Vector3(Random.Range(-35, 35), 50, -8), Quaternion.identity);
     }

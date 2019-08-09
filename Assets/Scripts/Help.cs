@@ -32,8 +32,9 @@ public class Help : MonoBehaviour {
 		}
 
 		if (isActive) {
-			Time.timeScale = 1.0f;
-			breaktime = false;
+			//Time.timeScale = 1.0f;
+			//breaktime = false;
+			pause.enabled = true;
 		}
 		}
 	}

@@ -18,6 +18,7 @@ public class PausePlay : MonoBehaviour {
 	public GameObject HelpMenu;
 	public InputField UserInput;
 
+
 	// Use this for initialization
 	void Start () {
 		isPaused = true;
@@ -28,7 +29,7 @@ public class PausePlay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!HelpMenu.activeSelf && UserInput.enabled == false) { //only do this if the help menu is closed
+		if (!HelpMenu.activeSelf && UserInput.enabled == false) { //only do this if the help menu & player menu is closed
 			
 
 			if (Input.GetKeyDown ("space") && !isPaused) {
@@ -44,7 +45,7 @@ public class PausePlay : MonoBehaviour {
 				pause.enabled = false;
 			} else if (HelpMenu.activeSelf)
 			{
-				isPaused = false;
+				isPaused = true;
 			}
 
 			breaktime = isPaused;
