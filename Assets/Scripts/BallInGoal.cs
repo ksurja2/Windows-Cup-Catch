@@ -8,10 +8,11 @@ using UnityEngine.UI; //for Text object
 public class BallInGoal : MonoBehaviour
 {
     public Text score;
-    
+    public Vector3 thisPos;
+
 
     //initialize counter for captured targets
-    private int numCaptured;
+    public int numCaptured;
 
 
     private void Start()
@@ -63,34 +64,39 @@ public class BallInGoal : MonoBehaviour
         Vector3 posThree = new Vector3(-40, -7.5f, 14);
         Vector3 posFour = new Vector3(40, -7.5f, 14);
         Vector3 posFive = new Vector3(0, -7.5f, 0);
+        
 
         int posNumber = Random.Range(1, 5);
         //Debug.Log(posNumber);
         if (posNumber == 1  && transform.position != posOne)
         {
             transform.position = posOne;
+            thisPos = posOne;
         }
 
         else if (posNumber == 2 && transform.position != posTwo)
         {
             transform.position = posTwo;
+            thisPos = posTwo;
         }
 
         else if (posNumber == 3 && transform.position != posThree)
         {
             transform.position = posThree;
+            thisPos = posThree;
         }
 
         else if (posNumber == 4 && transform.position != posFour)
         {
             transform.position = posFour;
+            thisPos = posFour;
         }
 
         else
         {
             transform.position = posFive;
+            thisPos = posFive;
         }
-
     }
 
 

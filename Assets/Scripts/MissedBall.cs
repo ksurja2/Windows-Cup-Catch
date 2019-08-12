@@ -6,12 +6,13 @@ using UnityEngine;
 //Destroy all instances of objects tagged "Ball" which pass through the floor
 public class MissedBall : MonoBehaviour
 {
-    int missedCount = 0;
-
+    public int missedCount = 0;
+    public Vector3 fallenPos;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ball"))
         {
+            fallenPos = other.transform.position;
             //Destroy(other.gameObject);
             other.transform.position = new Vector3(Random.Range(SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
                 SpawnBall.height, Random.Range(SpawnBall.lowerSpawnZ, SpawnBall.upperSpawnZ));
