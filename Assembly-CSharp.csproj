@@ -60,21 +60,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AboveGoal.cs" />
     <Compile Include="Assets\Scripts\BallInGoal.cs" />
     <Compile Include="Assets\Scripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\CatchBall.cs" />
-    <Compile Include="Assets\Scripts\FiniteStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\FelixMovement.cs" />
+    <Compile Include="Assets\Scripts\Help.cs" />
     <Compile Include="Assets\Scripts\MissedBall.cs" />
-    <Compile Include="Assets\Scripts\Obsolete\OLD BallFSM.cs" />
-    <Compile Include="Assets\Scripts\Obsolete\OLD PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\MySaveData.cs" />
+    <Compile Include="Assets\Scripts\OldMovementScripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\OldMovementScripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\OldMovementScripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\PausePlay.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\SaveData 1.cs" />
-    <Compile Include="Assets\Scripts\SaveData.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovementWithTorque.cs" />
+    <Compile Include="Assets\Scripts\SimplePlayerController.cs" />
     <Compile Include="Assets\Scripts\SpawnBall.cs" />
-    <Compile Include="Assets\Scripts\StartPanel.cs" />
+    <Compile Include="Assets\Scripts\TrialNum.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -278,6 +278,36 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:/Program Files/Unity/2019.3.0a6/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="BurtSharp">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/BurtSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BurtSharp.UnityInterface">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/BurtSharp.UnityInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="coapsharp">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/coapsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MsgPack">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/MsgPack.dll</HintPath>
+    </Reference>
+    <Reference Include="mysql.data">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/mysql.data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RSG.Promise">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/RSG.Promise.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>C:/Users/ksurj/OneDrive/Documents/GitProjects/Windows Cup Catch/Assets/Scripts/dll/System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/2019.3.0a6/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
