@@ -1017,6 +1017,34 @@ CapsuleCollider:
   m_Height: 0.120525494
   m_Direction: 1
   m_Center: {x: 0, y: -0.015, z: 0}
+--- !u!114 &704084156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 704084152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d5873974e304a26a70dfe68e514e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectScale: 40
+  PSText: {fileID: 1712753265}
+  FlipAngleText: {fileID: 1333526435}
+  GravText: {fileID: 343059474}
+  _toolForceQ: {x: 0, y: 0, z: 0, w: 0}
+  _teneoTorqueQ: 0
+  flipangle: 0
+  grav_gain0: 0
+  PSFactor: 1
+  player: {fileID: 704084152}
+  upperXBound: 50
+  lowerXBound: -50
+  upperZBound: 60
+  lowerZBound: -20
+  upperYBound: 3.5
+  lowerYBound: 0
+  hand: 
 --- !u!64 &704084157
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1053,7 +1081,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 704084152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06040ee775862466c9142a884ce34bbe, type: 3}
   m_Name: 
