@@ -37,7 +37,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 	public Vector4 _toolForceQ = Vector4.zero; 
 	public float _teneoTorqueQ = 0f; 
 	public float flipangle; // = 180 for RH, 0 for LH 
-	private float CalibAngle1 = 90, CalibTenoAngle; 
+	private float CalibAngle1 = 180, TenoAngle; 
 	public float grav_gain0 = 0f; 
 	private float MasterForce = 1; //overall multiplier for CalcForces() function 
 
@@ -226,7 +226,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		return _robot.GetJointPositions(); 
 	} 
 
-	public BurtSharp.CoAP.MsgTypes.RobotCommand CalcForces() 
+	public BurtSharp.CoAP.MsgTypes.RobotCommand CalcForces()
 	{ 
 
 		Vector3 vel = _currentVelocity; 
@@ -240,29 +240,65 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		Vector3 coreTorque = Vector3.zero; 
 
 
-		//email felix 
-		//this section is what we want  
-		_teneoTorque0 = 1.0f; 
+		//AREA OF INTEREST: ADJUST TORQUES HERE
+
+		//_teneoTorque0 = 1.0f; 
 		//CalibTenoAngle = -Mathf.DeltaAngle(handangles[2], CalibAngle1) + 180.0f; 
 
-		//relates torque linearly to difference in angle between player and some arbitrary constant 
-		CalibTenoAngle = -Mathf.DeltaAngle(handangles[2], CalibAngle1) + 180.0f; //apply calibration to pronation/supination portion of handangles 
+		//compare hand angle in space to designated "origin" CalibAngle1 
+		TenoAngle = Mathf.Abs (Mathf.Ceil ((Mathf.DeltaAngle (handangles [2], CalibAngle1)))); //apply calibration to pronation/supination portion of handangles 
 
-		if (CalibTenoAngle > 160 + 180) 
-		{ 
-			//Debug.Log ("Teneo Limit high: "  ); 
+		Debug.Log(handangles[2]); //for some reason, Debug.Log(handangles[3]) negates any pronation/supination assist/resist
 
-			_teneoTorque = _teneoTorque0 * Mathf.Clamp(Mathf.Cos(5.0f * (CalibTenoAngle - 160 + 180) * Mathf.PI / 180), 0, 1); 
-			//_teneoTorque = 0f; 
+		//positive torque = pronation
+		//negative torque = supination
+
+		//test 1: stable equilibrium @ full pronation
+		/*CalibAngle1 = 0; //left hand
+		if (TenoAngle > CalibAngle1) {
+			_teneoTorque = TenoAngle * 0.005f;
+			Debug.Log ("Please Supinate");
 		} 
+		if (TenoAngle < CalibAngle1){
+			_teneoTorque = -TenoAngle * 0.005f;
+			Debug.Log ("Please Pronate");
+		}
+			if (TenoAngle == 0){
+				_teneoTorque = 0;
+			}
+			*/
 
-		if (CalibTenoAngle < 20 + 180) 
-		{ 
-			//Debug.Log ("Teneo Limit low: "  ); 
-			//Mathf.Cos((handangles[2]-180+90)) 
-			_teneoTorque = _teneoTorque0 * Mathf.Clamp(Mathf.Cos(5.0f * (CalibTenoAngle - 20 + 180) * Mathf.PI / 180), 0, 1); 
-			//_teneoTorque = 0f; 
+		//test 2: stable equilibrium-- @ full supination
+		/*CalibAngle1 = 0; //left hand
+		if (TenoAngle > CalibAngle1) {
+			_teneoTorque = -TenoAngle * 0.005f;
+			Debug.Log ("Please Supinate");
 		} 
+		if (TenoAngle < CalibAngle1){
+			_teneoTorque = TenoAngle * 0.005f;
+			Debug.Log ("Please Pronate");
+		}
+		if (TenoAngle == 0){
+			_teneoTorque = 0;
+		} */
+
+		//the above only works in one direction because TenoAngle can never be negative...need to find new calibangle1 or remove mathf.abs
+
+
+		//test 3: unstable equilibrium; balance in center
+		CalibAngle1 = 0; //left hand
+		if (TenoAngle > CalibAngle1) {
+			_teneoTorque = TenoAngle * -0.005f;
+
+		} 
+		if (TenoAngle < CalibAngle1){
+			_teneoTorque = TenoAngle * 0.005f;
+
+		}
+		if (TenoAngle == 0){
+			_teneoTorque = 0;
+		}
+
 
 
 		_toolForceQ = _toolForce; 
@@ -275,7 +311,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		//x is the user torque/hand velocity 
 		//need safety checks in place as well 
 
-		_teneoTorque = _teneoTorque0; 
+		//_teneoTorque = _teneoTorque0; 
 
 		return RobotCommandExtensions.RobotCommandForceTorque(_toolForce * MasterForce, coreTorque, _teneoTorque * MasterForce); 
 
