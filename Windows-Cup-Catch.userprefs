@@ -7,7 +7,7 @@
       <File FileName="Assets/Scripts/MissedBall.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/SpawnBall.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/SimplePlayerController.cs" Line="249" Column="3" />
-      <File FileName="Assets/Scripts/PlayerMovementWithTorque.cs" Line="260" Column="3" />
+      <File FileName="Assets/Scripts/PlayerMovementWithTorque.cs" Line="295" Column="38" />
       <File FileName="Assets/Scripts/PausePlay.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Help.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/MySaveData.cs" Line="1" Column="1" />

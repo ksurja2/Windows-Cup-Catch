@@ -246,9 +246,10 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		//CalibTenoAngle = -Mathf.DeltaAngle(handangles[2], CalibAngle1) + 180.0f; 
 
 		//compare hand angle in space to designated "origin" CalibAngle1 
-		TenoAngle = Mathf.Abs (Mathf.Ceil ((Mathf.DeltaAngle (handangles [2], CalibAngle1)))); //apply calibration to pronation/supination portion of handangles 
-
-		Debug.Log(handangles[2]); //for some reason, Debug.Log(handangles[3]) negates any pronation/supination assist/resist
+		CalibAngle1 = flipangle;
+		TenoAngle = Mathf.DeltaAngle (handangles [2], CalibAngle1); //apply calibration to pronation/supination portion of handangles 
+		//TenoAngle = Mathf.Abs (Mathf.Ceil ((Mathf.DeltaAngle (handangles [2], CalibAngle1))));
+		//Debug.Log(handangles[2]); //for some reason, Debug.Log(handangles[3]) negates any pronation/supination assist/resist
 
 		//positive torque = pronation
 		//negative torque = supination
@@ -286,19 +287,20 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 
 		//test 3: unstable equilibrium; balance in center
-		CalibAngle1 = 0; //left hand
-		if (TenoAngle > CalibAngle1) {
-			_teneoTorque = TenoAngle * -0.005f;
-
+		if (TenoAngle > CalibAngle1 + 10) {
+			_teneoTorque = (TenoAngle  - 10) * -0.005f;
+			
 		} 
-		if (TenoAngle < CalibAngle1){
-			_teneoTorque = TenoAngle * 0.005f;
+		if (TenoAngle < CalibAngle1 - 10){
+			_teneoTorque = (TenoAngle + 10) * 0.005f;
 
 		}
-		if (TenoAngle == 0){
+		if (TenoAngle >= (CalibAngle1 - 10) && TenoAngle <= (CalibAngle1 + 10)){
 			_teneoTorque = 0;
+		} 
+		if(_teneoTorque > 1){ //safety; don't exert too much torque
+			_teneoTorque = 1;
 		}
-
 
 
 		_toolForceQ = _toolForce; 
