@@ -288,18 +288,18 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 		//test 3: unstable equilibrium; balance in center
 		if (TenoAngle > CalibAngle1 + 10) {
-			_teneoTorque = (TenoAngle  - 10) * -0.005f;
+			_teneoTorque = (TenoAngle - 45) * -0.005f;
 			
 		} 
 		if (TenoAngle < CalibAngle1 - 10){
-			_teneoTorque = (TenoAngle + 10) * 0.005f;
+			_teneoTorque = (-TenoAngle + 45) * 0.005f;
 
 		}
 		if (TenoAngle >= (CalibAngle1 - 10) && TenoAngle <= (CalibAngle1 + 10)){
 			_teneoTorque = 0;
 		} 
-		if(_teneoTorque > 1){ //safety; don't exert too much torque
-			_teneoTorque = 1;
+		if(_teneoTorque > 1.75f){ //safety; don't exert too much torque
+			_teneoTorque = 1.75f;
 		}
 
 
