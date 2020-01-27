@@ -29,7 +29,7 @@ public class CatchBall : MonoBehaviour
 
     }
 
-    //upon falling out of the player bucket, the ball is no longer a child
+    //upon falling out of the player bucket, the ball is no longer a child and its tag is changed 
     void OnTriggerExit(Collider other)
     {
 		if (other.CompareTag ("Ball")) {
@@ -44,7 +44,7 @@ public class CatchBall : MonoBehaviour
 	void Update(){ //reset ball to random spawn
 		if (Input.GetMouseButtonDown (1)) {
 
-			Debug.Log ("RC");
+			//Debug.Log ("RightClick");
 
 			Vector3 newPos = new Vector3 (Random.Range (SpawnBall.lowerSpawnX, SpawnBall.upperSpawnX),
 				                 SpawnBall.height, Random.Range (SpawnBall.lowerSpawnZ, SpawnBall.upperSpawnZ));

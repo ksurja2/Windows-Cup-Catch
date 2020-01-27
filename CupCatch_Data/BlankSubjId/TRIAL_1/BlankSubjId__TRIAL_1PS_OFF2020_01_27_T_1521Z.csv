@@ -1,0 +1,2 @@
+theTime,x,y,z,xvel,yvel,zvel,playerRotation,flipangle,grav_gain0,PSFactor,score,caughtToFloor,missedToFloor,ballTouchdownX,ballTouchdownY,ballTouchdownZ,goalPosX,goalPosY,goalPosZ
+0,0,10,-58.7,0.02607239,0.04052217,0.02627309,92.86273,180,0,1,0,0,0,(0.0, 0.0, 0.0),(0.0, 0.0, 0.0)

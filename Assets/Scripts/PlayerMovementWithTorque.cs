@@ -21,8 +21,8 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 	private Vector3 _toolForce = Vector3.zero;
 	private float _teneoTorque = 0f; 
-	private float _teneoTorque0 = 0f; 
-
+	private float _teneoTorque0 = 0f; 	private Vector4 teneoPosition; 
+	private float teneoVelocity;
 
 	private ConnectionSetter _robot; 
 
@@ -93,7 +93,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 	// Update is called once per frame 
 	void Update() 
 	{ 
-
+		
 		if (Input.GetKeyDown("]")) 
 		{ //change gravity gains 
 			grav_gain0 = grav_gain0 + 0.1f; 
@@ -179,7 +179,13 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		transform.eulerAngles = new Vector3(0, 0, (flipangle - 90 - robotangles[3] * 180 / Mathf.PI)); //note there is no scalar multiplier applied to handangles 
 
 
-		handangles = transform.eulerAngles; 
+		handangles = transform.eulerAngles;
+
+		//https://forum.unity.com/threads/grabbing-position-data-from-previous-frame.87723/ figure out how to get data from previous frame to get deltaAngle
+		//teneoVelocity = (handangles [2] - lastAngle)/ (Time.deltaTime * 5);
+		Debug.Log("handangles: " + handangles[2]);
+		Debug.Log("Time.deltaTime: " + Time.deltaTime);
+		Debug.Log ("TENEOVELOCITY: " + teneoVelocity);
 		OutOfBounds(); 
 	} 
 
@@ -229,10 +235,10 @@ public class PlayerMovementWithTorque : MonoBehaviour
 	public BurtSharp.CoAP.MsgTypes.RobotCommand CalcForces()
 	{ 
 
-		Vector3 vel = _currentVelocity; 
+		Vector3 vel = _currentVelocity; //only returns linear velocities
 		Vector3 pos = _currentPosition; 
 
-
+		//Debug.Log("velocity:  " + vel); 
 
 		Vector3 vel_norm = vel.normalized; 
 		float vel_mag = vel.magnitude; 
@@ -287,7 +293,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 
 		//test 3: unstable equilibrium; balance in center
-		if (TenoAngle > CalibAngle1 + 10) {
+		/*if (TenoAngle > CalibAngle1 + 10) {
 			_teneoTorque = (TenoAngle - 45) * -0.005f;
 			
 		} 
@@ -300,8 +306,43 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		} 
 		if(_teneoTorque > 1.75f){ //safety; don't exert too much torque
 			_teneoTorque = 1.75f;
-		}
+		} */
 
+		//stable equilibriums on each side?
+		//FIXME twitches, only applying toqrue in negative (clockwise) direction
+		/*if (TenoAngle > CalibAngle1 + 10) {
+			_teneoTorque = (TenoAngle) * -0.005f;
+
+		} 
+		if (TenoAngle < CalibAngle1 - 10){
+			_teneoTorque = (-TenoAngle) * -0.005f;
+
+		}
+		if (TenoAngle >= (CalibAngle1 - 10) && TenoAngle <= (CalibAngle1 + 10)){
+			_teneoTorque = 0;
+		} 
+		if(_teneoTorque > 1.75f){ //safety; don't exert too much torque
+			_teneoTorque = 1.75f;
+		}*/
+
+		//want to apply greater force against the user the faster they pronate/supinate
+
+		//to do this, we first need to find the angular velocity of the Teneo --> find change in angle, then divide by some timestep
+		float cutoff = 30; //30 degrees/ sec??
+		if (teneoVelocity > cutoff) {
+			//_teneoTorque = teneoVelocity * -0.005f;
+
+		} 
+		if (teneoVelocity < cutoff){
+			//_teneoTorque = -teneoVelocity * -0.005f;
+
+		}
+		if (teneoVelocity >= cutoff && teneoVelocity <= cutoff){
+			//_teneoTorque = 0;
+		} 
+		if(_teneoTorque > 1.75f){ //safety; don't exert too much torque
+			//_teneoTorque = 1.75f;
+		} 
 
 		_toolForceQ = _toolForce; 
 		_teneoTorqueQ = _teneoTorque; 
