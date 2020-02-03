@@ -8,7 +8,7 @@ using UnityEngine.UI; //for Text object
 * Attach this script to the Goal! gameobject.
 * This script increments the player's score when a "caught" ball is successfully
 * placed in the goal. It then resets the ball prefab to a random spawn
-* point upon collision with floor or goal. The goal then moves to a random spot within a radius,
+* point upon collision. The goal then moves to a random spot within a radius,
 * but after a set number of movements will return to its "home" position.
 </summary> */
 
@@ -36,10 +36,9 @@ public class BallInGoal : MonoBehaviour
 		_trialNum = GameObject.Find ("Main Camera").GetComponent<TrialNum> ();
     }
 
-
+    //Test Goal Movement
     void Update()
     {
-		//Test Goal Movement
         /*if (Input.GetMouseButtonDown(0))
         {
             MoveGoal();
@@ -62,7 +61,8 @@ public class BallInGoal : MonoBehaviour
 
     }
 
-    //if ball enters Goal, move to random spawn and increment counter 
+    //if target enters Goal, destroy object and increment counter 
+    //BallFSM, CASE #5
     void OnTriggerEnter(Collider other)
     {
         
@@ -146,10 +146,43 @@ public class BallInGoal : MonoBehaviour
 			} else if (zPos > minZ) { //bottom
 				directionAngle = Random.Range (0, pi);
 			}
-		} //this can be rewritten more concisely 
+		}
 
 
 		return directionAngle;
 	} 
+
+	/*Vector3 posOne = new Vector3(-40, -7.5f, -7);
+        Vector3 posTwo = new Vector3(40, -7.5f, -7);
+        Vector3 posThree = new Vector3(-40, -7.5f, 14);
+        Vector3 posFour = new Vector3(40, -7.5f, 14);
+        Vector3 posFive = new Vector3(0, -7.5f, 0);
+
+        int posNumber = Random.Range(1, 5);
+        //Debug.Log(posNumber);
+        if (posNumber == 1  && transform.position != posOne)
+        {
+            transform.position = posOne;
+        }
+
+        else if (posNumber == 2 && transform.position != posTwo)
+        {
+            transform.position = posTwo;
+        }
+
+        else if (posNumber == 3 && transform.position != posThree)
+        {
+            transform.position = posThree;
+        }
+
+        else if (posNumber == 4 && transform.position != posFour)
+        {
+            transform.position = posFour;
+        }
+
+        else
+        {
+            transform.position = posFive;
+        } */
 
 }
