@@ -37,7 +37,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 	public Vector4 _toolForceQ = Vector4.zero; 
 	public float _teneoTorqueQ = 0f; 
 	public float flipangle; // = 180 for RH, 0 for LH 
-	private float CalibAngle1 = 180, TenoAngle; 
+	private float CalibAngle1 = 270, TenoAngle; 
 	public float grav_gain0 = 0f; 
 	private float MasterForce = 1; //overall multiplier for CalcForces() function 
 
@@ -47,7 +47,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 	public GameObject player; 
 
-	private float origin = 45;
+	private float origin = 270;
 	private float currentHandAngle;
 	private float previousHandAngle = 0;
 	private float directionOfMotion;
@@ -94,7 +94,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 			hand = "RH"; //used in filename 
 		} 
 
-
+		origin = handangles [2] / 2;
 
 	} 
 
@@ -190,8 +190,8 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		handangles = transform.eulerAngles; 
 
 		// find direction of player movement every frame
-		currentHandAngle = handangles [2] - origin; //90 is our "origin"
-		if (currentHandAngle - previousHandAngle != 0) {
+		currentHandAngle = handangles [2]; //90 is our "origin"
+		if (currentHandAngle - previousHandAngle != 0  && currentHandAngle - previousHandAngle > 1) { //don't change direction of motion until player shifts 3 degrees in opposite direction
 			directionOfMotion = (currentHandAngle - previousHandAngle) / Mathf.Abs (currentHandAngle - previousHandAngle);
 		} else {
 			directionOfMotion = 0;
@@ -264,68 +264,16 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		//CalibTenoAngle = -Mathf.DeltaAngle(handangles[2], CalibAngle1) + 180.0f; 
 
 		//compare hand angle in space to designated "origin" CalibAngle1 
-		CalibAngle1 = flipangle;
-		TenoAngle = Mathf.DeltaAngle (handangles [2], CalibAngle1); //apply calibration to pronation/supination portion of handangles 
-		//TenoAngle = Mathf.Abs (Mathf.Ceil ((Mathf.DeltaAngle (handangles [2], CalibAngle1))));
-		//Debug.Log(handangles[2]); //for some reason, Debug.Log(handangles[3]) negates any pronation/supination assist/resist
+		//CalibAngle1 = flipangle;
+		//TenoAngle = Mathf.DeltaAngle (handangles [2], CalibAngle1); //apply calibration to pronation/supination portion of handangles 
 
-		//positive torque = pronation
-		//negative torque = supination
 
-		//test 1: stable equilibrium @ full pronation
-		/*CalibAngle1 = 0; //left hand
-		if (TenoAngle > CalibAngle1) {
-			_teneoTorque = TenoAngle * 0.005f;
-			Debug.Log ("Please Supinate");
-		} 
-		if (TenoAngle < CalibAngle1){
-			_teneoTorque = -TenoAngle * 0.005f;
-			Debug.Log ("Please Pronate");
+		//only works in one direction :(
+		_teneoTorque = directionOfMotion * Mathf.Abs (handangles [2] - origin) * 0.005f;
+		if (Mathf.Abs(_teneoTorque) >= 1.75f) {
+			_teneoTorque = 1.75f * directionOfMotion;
 		}
-			if (TenoAngle == 0){
-				_teneoTorque = 0;
-			}
-			*/
-
-		//test 2: stable equilibrium-- @ full supination
-		/*CalibAngle1 = 0; //left hand
-		if (TenoAngle > CalibAngle1) {
-			_teneoTorque = -TenoAngle * 0.005f;
-			Debug.Log ("Please Supinate");
-		} 
-		if (TenoAngle < CalibAngle1){
-			_teneoTorque = TenoAngle * 0.005f;
-			Debug.Log ("Please Pronate");
-		}
-		if (TenoAngle == 0){
-			_teneoTorque = 0;
-		} */
-
-		//the above only works in one direction because TenoAngle can never be negative...need to find new calibangle1 or remove mathf.abs
-
-
-		//test 3: unstable equilibrium; balance in center
-		/*if (TenoAngle > CalibAngle1 + 10) {
-			_teneoTorque = (TenoAngle - 45) * -0.005f *PSFactor;
-			
-		} 
-		if (TenoAngle < CalibAngle1 - 10){
-			_teneoTorque = (-TenoAngle + 45) * 0.005f *PSFactor;
-
-		}
-		if (TenoAngle >= (CalibAngle1 - 10) && TenoAngle <= (CalibAngle1 + 10)){
-			_teneoTorque = 0;
-		} 
-		if(_teneoTorque > 1.75f){ //safety; don't exert too much torque
-			_teneoTorque = 1.75f;
-		}*/
-
-
-		_teneoTorque = directionOfMotion * Mathf.Abs (handangles [2] - origin) * 0.0025f;
-		if (Mathf.Abs(_teneoTorque) >= 1.5f) {
-			_teneoTorque = 1.5f * directionOfMotion;
-		}
-
+		Debug.Log ("Angle: " + handangles[2] + " Torque: " + _teneoTorque + " Direction: " + directionOfMotion);
 
 		_toolForceQ = _toolForce; 
 		_teneoTorqueQ = _teneoTorque; 

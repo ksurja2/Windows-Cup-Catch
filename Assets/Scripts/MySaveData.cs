@@ -110,7 +110,7 @@ public class MySaveData : MonoBehaviour {
 		playerRotation = _playerData.transform.rotation.eulerAngles[2];
 		playerRotation = Mathf.Abs (flipangle - playerRotation);
 
-		Debug.Log ("PLAYER ROTATION: " + playerRotation);
+		//Debug.Log ("PLAYER ROTATION: " + playerRotation);
 
 		//if (((subjname != "Blank_SubjId") || !string.IsNullOrEmpty(subjname) && (breaktime==false) && (firstrun==true))){
 
