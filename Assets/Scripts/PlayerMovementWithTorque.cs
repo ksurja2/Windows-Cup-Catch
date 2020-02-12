@@ -50,6 +50,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 	private float origin = 270;
 	private float currentHandAngle;
 	private float previousHandAngle = 0;
+	private float deltaHandAngle = 0;
 	private float directionOfMotion;
 
 	public float upperXBound = 50f; 
@@ -84,6 +85,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 		if (_robot.Status.handedness == BurtSharp.CoAP.MsgTypes.RobotHandedness.Left) 
 		{ 
+			origin = 270;
 			flipangle = 0; 
 			hand = "LH"; //used in filename 
 		} 
@@ -94,7 +96,7 @@ public class PlayerMovementWithTorque : MonoBehaviour
 			hand = "RH"; //used in filename 
 		} 
 
-		origin = handangles [2] / 2;
+		//origin = handangles [2] / 2;
 
 	} 
 
@@ -190,9 +192,13 @@ public class PlayerMovementWithTorque : MonoBehaviour
 		handangles = transform.eulerAngles; 
 
 		// find direction of player movement every frame
-		currentHandAngle = handangles [2]; //90 is our "origin"
-		if (currentHandAngle - previousHandAngle != 0  && currentHandAngle - previousHandAngle > 1) { //don't change direction of motion until player shifts 3 degrees in opposite direction
-			directionOfMotion = (currentHandAngle - previousHandAngle) / Mathf.Abs (currentHandAngle - previousHandAngle);
+
+		currentHandAngle = handangles [2]; //"origin" varies depending on handedness
+		deltaHandAngle = currentHandAngle - previousHandAngle;
+		if (deltaHandAngle != 0 && deltaHandAngle > 1) { //don't change direction of motion until player shifts n degrees in opposite direction
+			directionOfMotion = 1;
+		} else if (deltaHandAngle != 0 && deltaHandAngle < -1) {
+			directionOfMotion = -1;
 		} else {
 			directionOfMotion = 0;
 		}
@@ -260,16 +266,11 @@ public class PlayerMovementWithTorque : MonoBehaviour
 
 		//AREA OF INTEREST: ADJUST TORQUES HERE
 
-		//_teneoTorque0 = 1.0f; 
-		//CalibTenoAngle = -Mathf.DeltaAngle(handangles[2], CalibAngle1) + 180.0f; 
 
-		//compare hand angle in space to designated "origin" CalibAngle1 
-		//CalibAngle1 = flipangle;
-		//TenoAngle = Mathf.DeltaAngle (handangles [2], CalibAngle1); //apply calibration to pronation/supination portion of handangles 
-
-
-		//only works in one direction :(
+		//needs smoothing
 		_teneoTorque = directionOfMotion * Mathf.Abs (handangles [2] - origin) * 0.005f;
+		//_teneoTorque = directionOfMotion * Mathf.Abs (handangles [2] - origin) * 0.005f * PSFactor * (currentHandAngle - previousHandAngle);
+		//_teneoTorque = directionOfMotion * Mathf.Abs (deltaHandAngle  * 0.01f);
 		if (Mathf.Abs(_teneoTorque) >= 1.75f) {
 			_teneoTorque = 1.75f * directionOfMotion;
 		}
